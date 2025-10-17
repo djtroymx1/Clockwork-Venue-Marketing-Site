@@ -1,0 +1,34 @@
+name: redirect-smoke
+on:
+  schedule:
+    - cron: "12 5 * * *"
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check apex → www (HTTPS)
+        run: |
+          set -euo pipefail
+          L=$(curl -sI https://stageflowlive.com/test?x=1 | awk '/^Location:/ {print $2}' | tr -d '\r')
+          echo "Location: $L"
+          test "$L" = "https://www.clockworkvenue.com/test?x=1"
+
+      - name: Check www (Clockwork) → 200
+        run: |
+          set -euo pipefail
+          S=$(curl -s -o /dev/null -w "%{http_code}" https://www.clockworkvenue.com/test?x=1)
+          echo "Status: $S"
+          test "$S" = "200"
+
+      - name: Check console (root + deep) → 200
+        run: |
+          set -euo pipefail
+          for u in https://console.clockworkvenue.com/ https://console.clockworkvenue.com/deep/link; do
+            S=$(curl -s -o /dev/null -w "%{http_code}" "$u")
+            echo "$u => $S"
+            test "$S" = "200"
+          done
