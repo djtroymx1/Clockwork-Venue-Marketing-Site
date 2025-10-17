@@ -1,0 +1,37 @@
+﻿{
+  "targetUrl": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app",
+  "selectedPageUrl": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+  "matchedRequestUrl": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+  "finalStatusSummary": "[success - 200]",
+  "finalStatusCode": 200,
+  "redirectChain": [
+    {
+      "url": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "consoleMessages": [
+    "<no console messages found>"
+  ],
+  "clearSiteData": {
+    "origin": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app",
+    "localStorageCleared": true,
+    "sessionStorageCleared": true,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": []
+  }
+}

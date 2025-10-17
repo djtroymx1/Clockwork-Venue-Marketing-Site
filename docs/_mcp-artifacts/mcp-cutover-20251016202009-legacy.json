@@ -1,0 +1,37 @@
+﻿{
+  "targetUrl": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app",
+  "selectedPageUrl": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+  "matchedRequestUrl": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+  "finalStatusSummary": "[success - 200]",
+  "finalStatusCode": 200,
+  "redirectChain": [
+    {
+      "url": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "consoleMessages": [
+    "<no console messages found>"
+  ],
+  "clearSiteData": {
+    "origin": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app",
+    "localStorageCleared": true,
+    "sessionStorageCleared": true,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": []
+  }
+}
