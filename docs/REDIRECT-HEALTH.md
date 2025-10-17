@@ -19,3 +19,7 @@ Clockwork health: PASS
 | E | https://www.clockworkvenue.com/test?x=1 | https://www.clockworkvenue.com/test?x=1 | 200 | 200 | OK | 0 | 0 | No | docs/_mcp-artifacts/mcp-REDIRECT-CHECK-20251017-034459-cw-www.json, docs/_mcp-artifacts/mcp-REDIRECT-CHECK-20251017-034459-cw-www.png |
 
 _Result: PASS_
+### 2025-10-17 — Console+WWW verify
+- Console 200; login_ui_detected=true; screenshot: docs/_mcp-artifacts/console-live-20251017-062152.png
+- WWW 200; console_link_present=true; screenshot: docs/_mcp-artifacts/www-home-20251017-062152.png
+- Legacy->WWW: https://www.clockworkvenue.com/test?x=1; Apex Location: https://www.clockworkvenue.com/test?x=1; Deep: HTTP/2 200

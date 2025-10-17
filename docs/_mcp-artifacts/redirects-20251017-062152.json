@@ -1,0 +1,9 @@
+{
+  "probe": "redirects",
+  "timestamp": "20251017-062152",
+  "legacy_final": "https://www.clockworkvenue.com/test?x=1",
+  "legacy_expected": "https://www.clockworkvenue.com/test?x=1",
+  "apex_http": "HTTP/2 301",
+  "apex_location": "https://www.clockworkvenue.com/test?x=1",
+  "deep_status": "HTTP/2 200"
+}
