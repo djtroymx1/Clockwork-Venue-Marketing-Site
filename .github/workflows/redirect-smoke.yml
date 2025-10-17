@@ -1,34 +1,49 @@
-name: redirect-smoke
+name: Nightly Redirect Smoke
+
 on:
   schedule:
-    - cron: "12 5 * * *"
+    - cron: "0 5 * * *"  # 05:00 UTC ≈ 1:00 AM ET
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Check apex → www (HTTPS)
+      - name: Check stageflowlive.com → www.clockworkvenue.com (path+query preserved)
         run: |
           set -euo pipefail
-          L=$(curl -sI https://stageflowlive.com/test?x=1 | awk '/^Location:/ {print $2}' | tr -d '\r')
-          echo "Location: $L"
-          test "$L" = "https://www.clockworkvenue.com/test?x=1"
+          URL="https://stageflowlive.com/test?x=1"
+          EXPECT="https://www.clockworkvenue.com/test?x=1"
+          FIRST_LOC="$(curl -sS -I "$URL" | awk 'BEGIN{IGNORECASE=1}/^location:/{print $2}' | tr -d '\r')"
+          echo "First Location: $FIRST_LOC"
+          test -n "$FIRST_LOC" || (echo "No Location header on first hop"; exit 1)
+          FINAL="$(curl -sS -o /dev/null -w '%{url_effective}' -L "$URL")"
+          echo "Final URL: $FINAL"
+          if [ "$FIRST_LOC" != "$EXPECT" ] && [ "$FINAL" != "$EXPECT" ]; then
+            echo "Expected redirect to $EXPECT"; exit 1
+          fi
 
-      - name: Check www (Clockwork) → 200
+      - name: www.clockworkvenue.com responds 200
         run: |
           set -euo pipefail
-          S=$(curl -s -o /dev/null -w "%{http_code}" https://www.clockworkvenue.com/test?x=1)
-          echo "Status: $S"
-          test "$S" = "200"
+          CODE="$(curl -sS -o /dev/null -w '%{http_code}' -L 'https://www.clockworkvenue.com/test?x=1')"
+          echo "Status: $CODE"
+          test "$CODE" = "200"
 
-      - name: Check console (root + deep) → 200
+      - name: Console root responds 200
         run: |
           set -euo pipefail
-          for u in https://console.clockworkvenue.com/ https://console.clockworkvenue.com/deep/link; do
-            S=$(curl -s -o /dev/null -w "%{http_code}" "$u")
-            echo "$u => $S"
-            test "$S" = "200"
-          done
+          CODE="$(curl -sS -o /dev/null -w '%{http_code}' -L 'https://console.clockworkvenue.com/')"
+          echo "Status: $CODE"
+          test "$CODE" = "200"
+
+      - name: Console deep link responds 200
+        run: |
+          set -euo pipefail
+          CODE="$(curl -sS -o /dev/null -w '%{http_code}' -L 'https://console.clockworkvenue.com/deep/link')"
+          echo "Status: $CODE"
+          test "$CODE" = "200"
