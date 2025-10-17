@@ -1,0 +1,42 @@
+﻿{
+  "targetUrl": "https://console.stageflowlive.com",
+  "selectedPageUrl": "about:blank",
+  "matchedRequestUrl": "about:blank",
+  "finalStatusSummary": null,
+  "finalStatusCode": null,
+  "redirectChain": [
+    {
+      "url": "about:blank",
+      "method": "GET",
+      "statusSummary": null,
+      "statusCode": null,
+      "ok": null
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://console.stageflowlive.com/",
+      "method": "GET",
+      "statusSummary": "[failed - net::ERR_NAME_NOT_RESOLVED]",
+      "statusCode": null,
+      "ok": false
+    }
+  ],
+  "consoleMessages": [
+    "<no console messages found>"
+  ],
+  "clearSiteData": {
+    "origin": "null",
+    "localStorageCleared": false,
+    "sessionStorageCleared": false,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": [
+      "localStorage: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "sessionStorage: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "indexedDB: Failed to execute 'databases' on 'IDBFactory': Access to the IndexedDB API is denied in this context.",
+      "cookies: Failed to read the 'cookie' property from 'Document': Access is denied for this document."
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+:root {
+  --cv-primary: #0A2540;
+  --cv-aqua: #1FB8C6;
+  --cv-accent: #3F8CFF;
+  --cv-neutral-100: #F4F6F8;
+  --cv-neutral-900: #08131E;
+  --cv-success: #18B06B;
+  --cv-warning: #FFBF4D;
+  --cv-danger: #E34F4F;
+}
+
+/* Utility classes for quick theming (optional) */
+.bg-primary { background: var(--cv-primary); }
+.text-primary { color: var(--cv-primary); }
+.btn-accent { background: var(--cv-accent); color: white; }

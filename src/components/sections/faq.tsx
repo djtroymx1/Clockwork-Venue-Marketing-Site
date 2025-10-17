@@ -1,0 +1,151 @@
+
+"use client";
+
+import { useState } from 'react';
+import { Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { track } from '@/lib/analytics';
+import Link from 'next/link';
+
+const faqs = [
+  {
+    question: "What is Clockwork Venue?",
+    answer: "Clockwork Venue is a cloud-based rotation platform for clubs. It manages dancer lineups, syncs every device so DJs and staff stay on the same page, tracks tips, and creates exportable reports for post-shift analysis."
+  },
+  {
+    question: "How do live colors work?",
+    answer: "This is an incredible feature that most users depend on. Live colors show each dancer’s status in real time across DJ, Dance Board, and Floor views: Yellow = Dance, Red = VIP, Green = Special, Pink = On Tour, no color = Available. Only the DJ can move names between the Stage, Off Rotation, and Checked Out. This is by design. When a dancer is moved to Off Rotation or Checked Out, their current status and countdown continue and remain visible. Example: a VIP stays Red in Off Rotation to signal they are not eligible for the Stage until they are done with their dances and then the DJ returns them to the stage box. Colors and timers stay live synced on all devices."
+  },
+  {
+    question: "Can floor staff change the rotation?",
+    answer: "By default only the DJ can change rotations. Clockwork Venue supports role-based permissions so you can grant limited edit rights to floor staff or managers for specific shifts."
+  },
+  {
+    question: "How many stages can it handle?",
+    answer: "Up to 10. It auto splits as the roster grows and you can still move names manually at anytime."
+  },
+  {
+    question: "Can we export the night’s activity?",
+    answer: "Yes. You can export check in and check out times, number of dances, champagne room entries, and a separate DJ tip-out file."
+  },
+  {
+    question: "Can DJs track tip out?",
+    answer: "Yes. There is a built in tip out log for DJs."
+  },
+  {
+    question: "What devices does it work on?",
+    answer: "Use what your team already owns. Clockwork Venue works on iPhone and Android phones, iPads and Android tablets, Macs, Windows PCs, Chromebooks, and TVs or monitors with a built-in or connected web browser."
+  },
+  {
+    question: "Does it require Internet to function?",
+    answer: "Live sync requires connectivity. It runs on WiFi or cellular. If a device loses signal it continues to show the last loaded rotation and reconnects automatically when service comes back."
+  },
+  {
+    question: "How fast is setup?",
+    answer: "Setup is fast. Create an account, add your dancers, open the rotation board, and you are live in minutes with no installs or new hardware."
+  },
+  {
+    question: "Is our data secure?",
+    answer: "Yes. Accounts are permissioned and data is hosted on Google Firebase with modern security controls."
+  },
+  {
+    question: "Can it support more than one club?",
+    answer: "Yes. Ask us about multi location setups and the best way to structure access."
+  }
+];
+
+const FaqItem = ({ faq, isOpen, onToggle }: { faq: typeof faqs[0], isOpen: boolean, onToggle: () => void }) => {
+  const contentId = `faq-content-${faq.question.replace(/\s+/g, '-')}`;
+  const buttonId = `faq-button-${faq.question.replace(/\s+/g, '-')}`;
+
+  return (
+    <div 
+      className={cn(
+        "group relative rounded-lg border border-border bg-card transition-all duration-200 ease-in-out-hard",
+        "hover:border-primary/40",
+        {"is-open": isOpen}
+      )}
+    >
+      <div 
+        className={cn(
+          "absolute left-0 top-0 h-full w-[3px] scale-y-0 bg-gradient-to-b from-primary to-accent transition-transform duration-300 ease-in-out-hard group-hover:scale-y-100",
+          {"scale-y-100": isOpen}
+        )} 
+      />
+      <h3 className="text-lg font-medium leading-6">
+        <button
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={contentId}
+          id={buttonId}
+          className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
+          <span className="text-base sm:text-lg tracking-tight">{faq.question}</span>
+          <Plus className={cn("h-5 w-5 shrink-0 transition-transform duration-200 ease-in-out-hard motion-safe:group-focus-visible:rotate-45", {"rotate-45": isOpen})} />
+        </button>
+      </h3>
+      <div
+        id={contentId}
+        role="region"
+        aria-labelledby={buttonId}
+        className={cn(
+          "grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out-hard",
+          {"grid-rows-[1fr]": isOpen}
+        )}
+      >
+        <div className="overflow-hidden">
+           <p className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0 text-muted-foreground max-w-3xl leading-relaxed">
+             {faq.answer}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+export function Faq() {
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
+
+  const toggleItem = (index: number) => {
+    setOpenIndexes(prev => 
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
+    track('faq_toggle', { question: faqs[index].question });
+  };
+  
+  const handleContactClick = () => {
+    track('faq_contact_click');
+  }
+
+  return (
+    <section id="faq" aria-label="Frequently Asked Questions" className="py-20 md:py-28 bg-transparent">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className={cn("text-center max-w-3xl mx-auto section-in-view")}>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <span className="underline-slide-in">Frequently Asked Questions</span>
+          </h2>
+        </div>
+        <div className="mt-12 max-w-3xl mx-auto">
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <FaqItem
+                key={index}
+                faq={faq}
+                isOpen={openIndexes.includes(index)}
+                onToggle={() => toggleItem(index)}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="mt-16 text-center">
+            <p className="text-lg text-muted-foreground">Still have questions?</p>
+            <Button asChild size="lg" className="mt-4">
+                <Link href="#contact" onClick={handleContactClick}>Contact</Link>
+            </Button>
+        </div>
+      </div>
+    </section>
+  );
+}

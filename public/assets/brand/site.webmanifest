@@ -1,0 +1,21 @@
+{
+  "name": "Clockwork Venue",
+  "short_name": "Clockwork",
+  "icons": [
+    {
+      "src": "brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "brand/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0A2540",
+  "background_color": "#F4F6F8",
+  "display": "standalone",
+  "start_url": "/"
+}

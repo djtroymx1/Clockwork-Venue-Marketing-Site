@@ -1,0 +1,275 @@
+
+"use client";
+
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { legalConfig } from '@/lib/legal';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { Search, X } from 'lucide-react';
+import type { Tutorial } from '@/lib/types';
+import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
+import Head from 'next/head';
+
+const ROLES = ["DJ", "Manager", "Owner", "Floor", "Host"];
+const TOPICS = ["Rotation", "VIP", "Exports", "Reports", "Billing"];
+
+const fetchTutorials = async (): Promise<Tutorial[]> => {
+    const tutorialsCol = collection(db, "tutorials");
+    const q = query(
+        tutorialsCol, 
+        where("published", "==", true), 
+        orderBy("createdAt", "desc")
+    );
+    const snapshot = await getDocs(q);
+    
+    // Manual seeding for demonstration if collection is empty
+    if (snapshot.empty) {
+        console.log("No tutorials found in Firestore, returning hardcoded seed data.");
+        return [
+            { id: 'seed1', title: 'Mastering the Main Stage Rotation', roleTags: ['DJ', 'Manager'], topicTags: ['Rotation'], duration: '5:12', videoProvider: 'youtube', videoIdOrPath: 'dQw4w9WgXcQ', description: 'A comprehensive guide to managing your main stage lineup, from adding dancers to handling breaks.', published: true, createdAt: new Date().toISOString() },
+            { id: 'seed2', title: 'How to Handle VIP Room Entries', roleTags: ['Floor', 'Host', 'Manager'], topicTags: ['VIP'], duration: '3:45', videoProvider: 'youtube', videoIdOrPath: 'o-YBDTqX_ZU', description: 'Learn the step-by-step process for checking dancers into the VIP room and tracking their time.', published: true, createdAt: new Date().toISOString() },
+        ];
+    }
+    
+    return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    })) as Tutorial[];
+};
+
+
+const FilterChip = ({ label, isActive, onClick }: { label: string, isActive: boolean, onClick: () => void }) => (
+    <Button
+        variant={isActive ? "default" : "outline"}
+        size="sm"
+        onClick={onClick}
+        className={cn(
+            "rounded-full h-auto",
+            isActive && "bg-primary text-primary-foreground border-primary"
+        )}
+        aria-pressed={isActive}
+        aria-label={`Filter by ${label}`}
+    >
+        {label}
+        {isActive && <X className="ml-2 h-4 w-4" />}
+    </Button>
+);
+
+function VideoEmbed({ tutorial }: { tutorial: Tutorial }) {
+    let src = '';
+    if (tutorial.videoProvider === 'youtube') {
+        src = `https://www.youtube.com/embed/${tutorial.videoIdOrPath}`;
+    } else if (tutorial.videoProvider === 'vimeo') {
+        src = `https://player.vimeo.com/video/${tutorial.videoIdOrPath}`;
+    }
+    // 'storage' provider would require fetching a signed URL and is not implemented here.
+
+    if (!src) return <p>Video not available.</p>;
+
+    return (
+        <div className="aspect-video w-full">
+            <iframe
+                width="100%"
+                height="100%"
+                src={src}
+                title={`Tutorial: ${tutorial.title}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="rounded-lg"
+                loading="lazy"
+            ></iframe>
+        </div>
+    );
+}
+
+function TutorialCard({ tutorial, onOpen }: { tutorial: Tutorial, onOpen: (tutorial: Tutorial) => void }) {
+    const thumbnailUrl = tutorial.videoProvider === 'youtube'
+        ? `https://i.ytimg.com/vi/${tutorial.videoIdOrPath}/hqdefault.jpg`
+        : 'https://picsum.photos/480/360'; // Fallback for Vimeo/Storage
+
+    return (
+        <div 
+            className="sf-legal-hub-card group cursor-pointer flex flex-col justify-between transition-transform duration-200 hover:-translate-y-[2px]"
+            onClick={() => onOpen(tutorial)}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onOpen(tutorial)}
+            tabIndex={0}
+            role="button"
+            aria-label={`View tutorial: ${tutorial.title}`}
+        >
+            <div className="relative mb-4">
+                <img src={thumbnailUrl} alt={tutorial.title} className="w-full h-auto rounded-lg aspect-video object-cover" loading="lazy" />
+                <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    {tutorial.duration}
+                </div>
+            </div>
+            <div>
+                <h3 className="font-bold group-hover:text-primary transition-colors">{tutorial.title}</h3>
+                <div className="mt-2 flex flex-wrap gap-2">
+                    {[...tutorial.roleTags, ...tutorial.topicTags].slice(0,3).map(tag => (
+                        <Badge key={tag} variant="secondary" className="bg-secondary/20 text-secondary border-none">{tag}</Badge>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default function TutorialsPage() {
+    const [tutorials, setTutorials] = useState<Tutorial[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [activeRoles, setActiveRoles] = useState<string[]>([]);
+    const [activeTopics, setActiveTopics] = useState<string[]>([]);
+    const [selectedTutorial, setSelectedTutorial] = useState<Tutorial | null>(null);
+
+    useEffect(() => {
+        const loadTutorials = async () => {
+            setIsLoading(true);
+            try {
+                const data = await fetchTutorials();
+                setTutorials(data);
+            } catch (error) {
+                console.error("Error fetching tutorials:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadTutorials();
+    }, []);
+
+    const handleRoleToggle = useCallback((role: string) => {
+        setActiveRoles(prev => prev.includes(role) ? prev.filter(r => r !== role) : [...prev, role]);
+    }, []);
+
+    const handleTopicToggle = useCallback((topic: string) => {
+        setActiveTopics(prev => prev.includes(topic) ? prev.filter(t => t !== topic) : [...prev, topic]);
+    }, []);
+
+    const filteredTutorials = useMemo(() => {
+        return tutorials.filter(t => {
+            const matchesSearch = searchTerm === '' ||
+                t.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                t.description.toLowerCase().includes(searchTerm.toLowerCase());
+            
+            const matchesRoles = activeRoles.length === 0 ||
+                activeRoles.every(role => t.roleTags.includes(role));
+
+            const matchesTopics = activeTopics.length === 0 ||
+                activeTopics.every(topic => t.topicTags.includes(topic));
+
+            return matchesSearch && matchesRoles && matchesTopics;
+        });
+    }, [tutorials, searchTerm, activeRoles, activeTopics]);
+
+    const handleOpenModal = (tutorial: Tutorial) => {
+        setSelectedTutorial(tutorial);
+    };
+
+    const pageTitle = `Tutorials • ${legalConfig.brandName}`;
+    const pageDescription = "Run every shift like clockwork: live rotation, VIP timers, payouts, and reports in one console.";
+
+
+    return (
+        <div className="flex flex-col min-h-screen">
+            <Head>
+                <title>{pageTitle}</title>
+                <meta name="description" content={pageDescription} />
+                <meta property="og:title" content={pageTitle} />
+                <meta property="og:description" content={pageDescription} />
+                <meta name="twitter:title" content={pageTitle} />
+                <meta name="twitter:description" content={pageDescription} />
+            </Head>
+            <Header />
+            <main className="flex-grow container mx-auto px-4 py-8">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold tracking-tight mb-2">Tutorials</h1>
+                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                        Step-by-step guides and videos to help you master Clockwork Venue.
+                    </p>
+                </div>
+                
+                <div className="mb-8 space-y-6">
+                    <div className="relative max-w-lg mx-auto">
+                        <Input 
+                            placeholder="Search tutorials..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="pl-10"
+                            aria-label="Search tutorials"
+                        />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    </div>
+                    <div className="space-y-3">
+                         <div className="flex flex-wrap items-center justify-center gap-2" role="toolbar" aria-label="Filter by role">
+                             <span className="text-sm font-medium mr-2">Roles:</span>
+                             {ROLES.map(role => (
+                                 <FilterChip key={role} label={role} isActive={activeRoles.includes(role)} onClick={() => handleRoleToggle(role)} />
+                             ))}
+                         </div>
+                         <div className="flex flex-wrap items-center justify-center gap-2" role="toolbar" aria-label="Filter by topic">
+                            <span className="text-sm font-medium mr-2">Topics:</span>
+                            {TOPICS.map(topic => (
+                                 <FilterChip key={topic} label={topic} isActive={activeTopics.includes(topic)} onClick={() => handleTopicToggle(topic)} />
+                             ))}
+                         </div>
+                    </div>
+                </div>
+
+                {isLoading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[...Array(3)].map((_, i) => (
+                           <div key={i} className="bg-card rounded-2xl p-4 border border-border">
+                                <Skeleton className="w-full h-40 mb-4" />
+                                <Skeleton className="w-3/4 h-6 mb-2" />
+                                <Skeleton className="w-1/2 h-4" />
+                           </div>
+                        ))}
+                    </div>
+                ) : filteredTutorials.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredTutorials.map(tutorial => (
+                            <TutorialCard key={tutorial.id} tutorial={tutorial} onOpen={handleOpenModal} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-16">
+                        <h3 className="text-xl font-semibold">No tutorials match your filters</h3>
+                        <p className="text-muted-foreground mt-2">Try adjusting your search or filter criteria.</p>
+                    </div>
+                )}
+            </main>
+
+            <Dialog open={!!selectedTutorial} onOpenChange={(isOpen) => !isOpen && setSelectedTutorial(null)}>
+                <DialogContent className="sm:max-w-2xl bg-card/95 backdrop-blur-sm border-primary/20">
+                    {selectedTutorial && (
+                        <>
+                            <DialogHeader>
+                                <DialogTitle>{selectedTutorial.title}</DialogTitle>
+                            </DialogHeader>
+                            <div className="mt-4 space-y-4">
+                               <VideoEmbed tutorial={selectedTutorial} />
+                               <DialogDescription>{selectedTutorial.description}</DialogDescription>
+                            </div>
+                        </>
+                    )}
+                </DialogContent>
+            </Dialog>
+
+            <Footer />
+        </div>
+    );
+}

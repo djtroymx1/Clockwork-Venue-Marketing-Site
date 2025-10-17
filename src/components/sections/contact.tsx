@@ -1,0 +1,234 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
+import { track } from "@/lib/analytics";
+import Link from "next/link";
+import React from "react";
+
+const contactSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  clubName: z.string().optional(),
+  role: z.enum(["DJ", "Manager", "Owner", "House mom", "Other"], { required_error: "Please select a role." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+  requestDemo: z.boolean().default(false),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
+
+export function Contact() {
+  const { toast } = useToast();
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      clubName: "",
+      message: "",
+      requestDemo: false,
+    },
+  });
+
+  const generateMailtoLink = (data: ContactFormData) => {
+    const subject = encodeURIComponent("Clockwork Venue Inquiry");
+    const body = encodeURIComponent(
+      `Name: ${data.name}\n` +
+      `Email: ${data.email}\n` +
+      (data.clubName ? `Club Name: ${data.clubName}\n` : "") +
+      `Role: ${data.role}\n` +
+      `Request a Demo: ${data.requestDemo ? "Yes" : "No"}\n\n` +
+      `Message:\n${data.message}`
+    );
+    return `mailto:support@stageflowlive.com?subject=${subject}&body=${body}`;
+  };
+
+  const copyToClipboard = React.useCallback((data: ContactFormData) => {
+    const textToCopy = 
+      `Name: ${data.name}\n` +
+      `Email: ${data.email}\n` +
+      (data.clubName ? `Club Name: ${data.clubName}\n` : "") +
+      `Role: ${data.role}\n` +
+      `Request a Demo: ${data.requestDemo ? "Yes" : "No"}\n\n` +
+      `Message:\n${data.message}`;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      toast({
+        title: "Email app not found.",
+        description: "Your message has been copied to the clipboard.",
+      });
+    }).catch(() => {
+      toast({
+        variant: "destructive",
+        title: "Copy Failed",
+        description: "Could not copy message to clipboard.",
+      });
+    });
+  }, [toast]);
+
+  async function onSubmit(data: ContactFormData) {
+    track('contact_form_submit');
+    const mailtoLink = generateMailtoLink(data);
+
+    const newWindow = window.open(mailtoLink, '_blank');
+    
+    setTimeout(() => {
+        if (newWindow && !newWindow.closed) {
+             newWindow.close();
+             copyToClipboard(data);
+        } else {
+            form.reset();
+        }
+    }, 500);
+  }
+
+  return (
+    <section id="contact" aria-label="Contact" className="py-20 md:py-28">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Contact us</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Questions or a demo request. We’ll get back fast.
+            </p>
+          </div>
+
+          <div className="mt-12 bg-card rounded-lg p-6 md:p-8 border border-border">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your Name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email *</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="you@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="clubName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Club Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Optional" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="role"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Role *</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select your role" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="DJ">DJ</SelectItem>
+                            <SelectItem value="Manager">Manager</SelectItem>
+                            <SelectItem value="Owner">Owner</SelectItem>
+                            <SelectItem value="House mom">House mom</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message *</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="How can we help?" className="min-h-[120px]" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="requestDemo"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel className="font-normal">
+                          Request a live demo
+                        </FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+                  <Button type="submit" size="lg" className="w-full sm:w-auto">
+                    Send Message
+                  </Button>
+                  <Button asChild variant="link" className="text-muted-foreground">
+                    <Link href="mailto:support@stageflowlive.com">Or email us directly</Link>
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

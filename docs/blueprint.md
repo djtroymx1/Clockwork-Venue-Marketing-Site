@@ -1,0 +1,31 @@
+---
+title: "Clockwork Venue — Console Blueprint"
+owner: "you"
+status: "public"
+last_reviewed: "2025-10-16"
+---
+
+# Clockwork Venue — Console Blueprint
+
+> **Clockwork Venue — Console for Night Operations**  
+> Run every shift like clockwork: live rotation, VIP timers, payouts, and reports in one console.
+
+## Core Features:
+
+- Persistent Navigation: Sticky top navigation with logo, links to sections, and 'Join Waitlist' button.
+- Hero Section: Hero section with headline, sub-line, 'Join Waitlist' and 'Launch Web App' buttons.
+- Features Showcase: Display features of Clockwork Venue in a card layout.
+- How It Works Guide: Explain how Clockwork Venue works using a step-by-step guide.
+- Testimonials Display: Show customer testimonials to build trust and credibility.
+- FAQ Section: Provide answers to common questions about Clockwork Venue.
+- Waitlist Form: Modal to capture waitlist sign-ups, including form validation and success message.
+
+## Style Guidelines:
+
+- Primary color: #40A8E0 (a moderately saturated blue) to convey professionalism and reliability.
+- Background color: #0B0B0B (a very dark gray) to create a modern, sophisticated, dark theme.
+- Accent color: #F8D000 (a somewhat saturated yellow) to draw attention to key actions such as 'Join Waitlist'.
+- Font: 'Inter' (sans-serif) for a modern, clean, and readable aesthetic. Note: currently only Google Fonts are supported.
+- Use simple, modern icons to visually represent features and benefits.
+- Responsive layout to ensure optimal viewing experience across devices.
+- Subtle animations for a modern, engaging feel; for example, on button hover or form submission.

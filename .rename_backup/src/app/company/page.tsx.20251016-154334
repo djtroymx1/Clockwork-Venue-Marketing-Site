@@ -1,0 +1,57 @@
+
+import React from 'react';
+
+export const metadata = {
+  title: 'Company • StageFlow',
+  description: 'Learn more about Digital Visionworks LLC, the company behind StageFlow.',
+};
+
+export default function CompanyPage() {
+  return (
+    <section id="company" className="sf-section" aria-label="Company">
+      <div className="sf-container">
+        <h2 className="sf-h2">Digital Vision Works LLC</h2>
+        <p>
+          I build and ship apps, websites, and marketing that grow businesses.
+          From concept to launch, I handle product, site, media, and growth so
+          you see results fast.
+        </p>
+        <h3 className="sf-h3">What I do</h3>
+        <ul className="sf-list">
+          <li>App development and automation</li>
+          <li>Websites and landing pages</li>
+          <li>Marketing strategy and paid campaigns</li>
+          <li>Social media content and growth tips</li>
+          <li>Analytics and simple dashboards</li>
+          <li>Operations playbooks to improve team workflow</li>
+        </ul>
+
+        <h3 className="sf-h3">Portfolio</h3>
+        <ul className="sf-list">
+          <li>
+            <strong>StageFlow Live</strong>: rotation software for clubs with
+            real time sync, timers, exports, and DJ tip outs
+          </li>
+          <li>
+            <strong>Teedrip Studios</strong>: e commerce apparel brand with AI
+            driven design and on demand fulfillment
+          </li>
+        </ul>
+
+        <h3 className="sf-h3">How I work</h3>
+        <p>
+          Scope the goal, build the lean first version, launch fast, then
+          iterate with data.
+        </p>
+
+        <h3 className="sf-h3">Contact</h3>
+        <p>
+          Email{' '}
+          <a href="mailto:support@stageflowlive.com">
+            support@stageflowlive.com
+          </a>
+        </p>
+      </div>
+    </section>
+  );
+}

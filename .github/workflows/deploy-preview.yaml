@@ -1,0 +1,66 @@
+name: Preview Deploy (Firebase Hosting)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  preview:
+    name: Build → Preview Channel
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      # Prefer service account JSON secret. Fallback to token if you choose.
+      # Provide FIREBASE_SERVICE_ACCOUNT at repo or org level.
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      # Optional override: site id for Hosting (e.g., clockwork-console). If not set, firebase.json is used.
+      FIREBASE_SITE: ${{ vars.FIREBASE_SITE }}
+      # Optional: project id override for multi-project setups.
+      FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install deps
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm -C web-ui install --frozen-lockfile
+
+      - name: Build
+        run: pnpm -C web-ui build
+
+      - name: Firebase Preview Deploy
+        id: hosting_deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ env.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ${{ env.FIREBASE_PROJECT_ID }}
+          target: ${{ env.FIREBASE_SITE }}
+          channelId: pr-${{ github.event.number }}
+          expires: 7d
+        # If you prefer using FIREBASE_TOKEN instead of service account:
+        # env:
+        #   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Comment Preview URL
+        if: ${{ steps.hosting_deploy.outputs.details_url != '' }}
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            ✅ **Preview deployed**  
+            URL: ${{ steps.hosting_deploy.outputs.details_url }}
+            Channel: `pr-${{ github.event.number }}` (auto-expires in 7 days)

@@ -1,0 +1,46 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+
+    // Rules for public content
+    match /tutorials/{tutorialId} {
+      allow read: if resource.data.published == true;
+      allow write: if false; // For now, prevent client-side writes
+    }
+    match /manual_versions/{versionId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /manual_pages/{pageId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // TODO: Phase 4 - Enforce security rules for exports
+    match /exports/{exportId} {
+      allow read: if request.auth != null
+                  && resource.data.orgId == request.auth.token.orgId
+                  && request.auth.token.role in ['Manager','Admin'];
+      // Allow list only for authenticated managers/admins of any org,
+      // client-side logic must filter by orgId.
+      allow list: if request.auth != null
+                  && request.auth.token.role in ['Manager','Admin'];
+      allow create, update, delete: if false; // Server-side only
+
+      match /download_logs/{logId} {
+        allow read: if request.auth != null
+                    && get(/databases/$(database)/documents/exports/$(exportId)).data.orgId == request.auth.token.orgId
+                    && request.auth.token.role in ['Manager','Admin'];
+        allow create: if request.auth != null
+                      && get(/databases/$(database)/documents/exports/$(exportId)).data.orgId == request.auth.token.orgId
+                      && request.auth.token.role in ['Manager','Admin'];
+        allow update, delete: if false;
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  build_and_test:
+    name: Typecheck • Lint • Build • E2E (smoke)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install deps (root & web-ui/)
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm -C web-ui install --frozen-lockfile
+
+      - name: Cache Playwright
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('web-ui/package.json') }}
+
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm -C web-ui exec playwright install --with-deps
+
+      - name: Typecheck
+        run: pnpm -C web-ui typecheck
+
+      - name: Lint
+        run: pnpm -C web-ui lint
+
+      - name: Build
+        run: pnpm -C web-ui build
+
+      - name: E2E Smoke (optional)
+        if: ${{ !cancelled() }}
+        run: pnpm -C web-ui e2e:smoke
+
+      # Uncomment any targeted e2e suites you want always-on in CI:
+      # - name: E2E SW Update
+      #   run: pnpm -C web-ui e2e:sw-update
+      # - name: E2E Telemetry Sanitize
+      #   run: pnpm -C web-ui e2e:telemetry-sanitize
+
+      - name: Upload build artifact (for debugging)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-ui-build
+          path: web-ui/dist

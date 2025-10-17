@@ -1,0 +1,12 @@
+{
+  "name": "Clockwork Venue",
+  "short_name": "Clockwork",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F6F8",
+  "theme_color": "#0A2540",
+  "icons": [
+    { "src": "/assets/brand/clockwork-venue/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/assets/brand/clockwork-venue/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

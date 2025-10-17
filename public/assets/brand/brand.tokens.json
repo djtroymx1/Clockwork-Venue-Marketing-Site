@@ -1,0 +1,40 @@
+{
+  "brand": {
+    "name": "Clockwork Venue",
+    "colors": {
+      "primary_deep_blue": "#0A2540",
+      "secondary_aqua": "#1FB8C6",
+      "accent_electric_blue": "#3F8CFF",
+      "neutral_100": "#F4F6F8",
+      "neutral_900": "#08131E",
+      "success": "#18B06B",
+      "warning": "#FFBF4D",
+      "danger": "#E34F4F"
+    },
+    "tokens": {
+      "cv-primary": "#0A2540",
+      "cv-aqua": "#1FB8C6",
+      "cv-accent": "#3F8CFF",
+      "cv-neutral-100": "#F4F6F8",
+      "cv-neutral-900": "#08131E",
+      "cv-success": "#18B06B",
+      "cv-warning": "#FFBF4D",
+      "cv-danger": "#E34F4F"
+    }
+  },
+  "assets": {
+    "logo_monogram": [
+      "brand/logo-monogram-1024.png",
+      "brand/logo-monogram-512.png",
+      "brand/logo-monogram-256.png"
+    ],
+    "logo_wordmark": [
+      "brand/logo-wordmark-1600.png",
+      "brand/logo-wordmark-800.png"
+    ],
+    "favicon": "brand/favicon.ico",
+    "apple_touch_icon": "brand/apple-touch-icon.png",
+    "pwa_icon": "brand/icon-512.png",
+    "og_image": "brand/og-clockwork-venue.png"
+  }
+}

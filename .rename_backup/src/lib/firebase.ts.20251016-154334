@@ -1,0 +1,89 @@
+
+import { initializeApp, getApps } from "firebase/app";
+import { getFirestore, collection, addDoc, getDocs, query, where, doc } from 'firebase/firestore';
+
+const firebaseConfig = {
+  "projectId": "stageflow-marketing-site",
+  "appId": "1:688775398752:web:2c85328e8228cca9e50a05",
+  "storageBucket": "stageflow-marketing-site.firebasestorage.app",
+  "apiKey": "AIzaSyAQi_KhT7JnyqQeGXo4dMRKlx5w12EAppY",
+  "authDomain": "stageflow-marketing-site.firebaseapp.com",
+  "measurementId": "",
+  "messagingSenderId": "688775398752"
+};
+
+// Initialize Firebase
+let app;
+if (!getApps().length) {
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApps()[0];
+}
+
+const db = getFirestore(app);
+
+
+// Seeding logic for tutorials (for demonstration)
+const seedTutorials = async () => {
+    const tutorialsCol = collection(db, 'tutorials');
+    const q = query(tutorialsCol, where('published', '==', true));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+        console.log("Seeding initial tutorials...");
+        const seedData = [
+            { title: 'Mastering the Main Stage Rotation', roleTags: ['DJ', 'Manager'], topicTags: ['Rotation'], duration: '5:12', videoProvider: 'youtube', videoIdOrPath: 'dQw4w9WgXcQ', description: 'A comprehensive guide to managing your main stage lineup, from adding dancers to handling breaks.', published: true, createdAt: new Date() },
+            { title: 'How to Handle VIP Room Entries', roleTags: ['Floor', 'Host', 'Manager'], topicTags: ['VIP'], duration: '3:45', videoProvider: 'youtube', videoIdOrPath: 'o-YBDTqX_ZU', description: 'Learn the step-by-step process for checking dancers into the VIP room and tracking their time.', published: true, createdAt: new Date() },
+        ];
+        
+        for (const tutorial of seedData) {
+            await addDoc(tutorialsCol, tutorial);
+        }
+        console.log("Seeding complete.");
+    }
+};
+
+
+const seedManual = async () => {
+    const versionsCol = collection(db, 'manual_versions');
+    const versionsSnapshot = await getDocs(versionsCol);
+
+    if (versionsSnapshot.empty) {
+        console.log("Seeding initial manual content...");
+
+        // 1. Create a version
+        const versionDocRef = await addDoc(versionsCol, {
+            version: "v1",
+            label: "Version 1",
+            isCurrent: true,
+            createdAt: new Date(),
+        });
+        
+        // 2. Create pages for that version
+        const pagesCol = collection(db, 'manual_pages');
+        const pagesData = [
+            { slug: 'getting-started', title: 'Getting Started', order: 1, bodyMarkdown: 'Welcome to StageFlow! This manual will guide you through the essentials.\n\nFirst, set up your club profile and add your staff members.' },
+            { slug: 'roles-and-permissions', title: 'Roles & Permissions', order: 2, bodyMarkdown: 'StageFlow uses roles to control access.\n\n- **Manager**: Can see everything.\n- **DJ**: Can manage rotations.\n- **Floor**: View-only access.' },
+            { slug: 'exports-overview', title: 'Exports Overview', order: 3, bodyMarkdown: 'You can export shift data as CSV files.\n\nNavigate to the Reports section and select the date range you wish to export.' },
+        ];
+
+        for (const page of pagesData) {
+            await addDoc(pagesCol, {
+                ...page,
+                versionRef: versionDocRef,
+                updatedAt: new Date(),
+            });
+        }
+        console.log("Manual seeding complete.");
+    }
+};
+
+
+// Check if running in a browser environment before seeding
+if (typeof window !== 'undefined') {
+    // seedTutorials();
+    // seedManual();
+}
+
+
+export { app, db };

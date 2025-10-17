@@ -1,0 +1,94 @@
+
+import React from "react";
+import { legalConfig } from "@/lib/legal";
+import Link from "next/link";
+
+export const metadata = { title: `Terms of Service • ${legalConfig.brandName}` };
+
+export default function Page() {
+return (
+<main className="sf-legal" role="main">
+<h1>Terms of Service</h1>
+<p>Last updated: September 5, 2024</p>
+
+<p>
+Welcome to {legalConfig.brandWithMark()}. These Terms of Service (“Terms”) govern your access to and use of the StageFlow website, applications, and services (collectively, the “Service”), which is owned and operated by Digital Visionworks LLC. By accessing or using the Service, you agree to be bound by these Terms and our <Link href="/privacy">Privacy Policy</Link>.
+</p>
+
+<h2>1. Eligibility and Account Security</h2>
+<p>
+You must be at least 18 years of age to use the Service. By creating an account, you represent that you are 18 or older and that the information you provide is accurate, current, and complete. You are responsible for safeguarding your account credentials and for all activities that occur under your account. You must notify us immediately of any unauthorized use of your account.
+</p>
+
+<h2>2. License and Acceptable Use</h2>
+<p>
+Digital Visionworks LLC grants you a limited, non-exclusive, non-transferable, and revocable license to access and use the Service for your internal business operations. This license is contingent upon your compliance with these Terms.
+</p>
+<p>
+You agree not to, and not to permit others to:
+</p>
+<ul>
+    <li>Reverse engineer, decompile, disassemble, or otherwise attempt to discover the source code of the Service.</li>
+    <li>Scrape, duplicate, or copy any part of the Service or its data without our express written permission.</li>
+    <li>Use the Service for any purpose other than its intended use, including for benchmarking, creating a competing product, or any illegal activities.</li>
+</ul>
+<p>
+All rights, title, and interest in and to the Service, including all intellectual property rights, are and will remain the exclusive property of Digital Visionworks LLC and its licensors.
+</p>
+
+<h2>3. Subscriptions and Billing</h2>
+<p>
+    The Service requires a paid subscription. Billing is handled by our third-party payment processor, Stripe. By providing a payment method, you authorize us to charge you for your chosen subscription plan on a recurring basis until canceled.
+</p>
+<ul>
+    <li><strong>Trials:</strong> Free trials, if offered, will automatically convert to a paid subscription unless you cancel before the trial period ends.</li>
+    <li><strong>Renewals:</strong> Subscriptions automatically renew at the end of each billing cycle.</li>
+    <li><strong>Taxes:</strong> You are responsible for all applicable taxes and government fees.</li>
+    <li><strong>Invoices:</strong> Receipts and invoices are available through your Stripe billing portal.</li>
+    <li><strong>Refunds:</strong> All fees are non-refundable except as required by law.</li>
+    <li><strong>Delinquency:</strong> We may suspend or terminate your account for non-payment after providing notice.</li>
+</ul>
+
+
+<h2>4. Plan Changes and Pricing</h2>
+<p>
+We reserve the right to modify subscription plans or pricing with at least 30 days’ notice. Any price changes will take effect on your next billing cycle.
+</p>
+
+<h2>5. Termination</h2>
+<p>
+You may cancel your subscription at any time. We may suspend or terminate your access to the Service at any time, with or without cause or notice, for any reason, including for a violation of these Terms. Upon termination, your right to use the Service will immediately cease. We may retain certain data after termination as required by law or for legitimate business purposes.
+</p>
+
+<h2>6. Disclaimers and Limitation of Liability</h2>
+<p>
+THE SERVICE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. Digital Visionworks LLC DISCLAIMS ALL WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+</p>
+<p>
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL Digital Visionworks LLC, ITS AFFILIATES, OR ITS OPERATORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, ARISING FROM YOUR USE OF THE SERVICE. OUR TOTAL LIABILITY TO YOU FOR ANY CLAIMS ARISING FROM YOUR USE OF THE SERVICE IS LIMITED TO THE GREATER OF THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM OR $100.
+</p>
+
+<h2>7. Indemnification</h2>
+<p>
+You agree to indemnify and hold harmless Digital Visionworks LLC and its operators from and against any claims, liabilities, damages, losses, and expenses, including reasonable attorneys' fees, arising out of or in any way connected with your access to or use of the Service, or your violation of these Terms.
+</p>
+
+<h2>8. Governing Law and Dispute Resolution</h2>
+<p>
+These Terms shall be governed by the laws of the State of Florida, United States, without regard to its conflict of law principles. You agree to submit to the personal and exclusive jurisdiction of the state and federal courts located in Florida for the resolution of any disputes.
+</p>
+
+<h2>9. Changes to These Terms</h2>
+<p>
+We reserve the right to modify these Terms at any time. We will provide notice of material changes by posting the new Terms on our site. Your continued use of the Service after any such changes constitutes your acceptance of the new Terms.
+</p>
+
+<h2>10. Contact Information</h2>
+<p>
+If you have any questions about these Terms, please contact us at <a href="mailto:legal@stageflowlive.com">legal@stageflowlive.com</a>.
+</p>
+
+<p><Link href="/legal">Return to Legal</Link></p>
+</main>
+);
+}
