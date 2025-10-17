@@ -13,7 +13,7 @@
     },
     {
       "site": "clockworkvenue",
-      "public": "sites/www/public",
+      "public": "out",
       "ignore": ["**/.*", "**/node_modules/**"],
       "headers": [
         { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
