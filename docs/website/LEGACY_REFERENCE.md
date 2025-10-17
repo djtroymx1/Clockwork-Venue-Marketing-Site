@@ -14,4 +14,4 @@ Use `_legacy/` to store OLD website backups for reference (copy blocks, styles, 
 **How to use**
 1) Put your unzipped backup under `_legacy/website-old/`.
 2) If you want to import a fragment later, copy just that section into new content/templates.
-3) Keep `_legacy/` small—no giant archives. Delete what you don’t need.
+3) Keep `_legacy/` small - no giant archives. Delete what you don't need.

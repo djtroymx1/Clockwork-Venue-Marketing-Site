@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home - Clockwork Venue</title>
 <meta name="description" content="Rotation, floor coordination, DJ flow, admin controls, and reports - finally in sync.">
@@ -6,55 +8,184 @@
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
-<header>
-  <a href="/" data-testid="nav-logo" class="logo"><strong>Clockwork Venue</strong></a>
-  <nav class="nav">
+<header class="site-header">
+  <a href="/" data-testid="nav-logo" class="site-logo"><strong>Clockwork Venue</strong></a>
+  <nav class="site-nav">
     <a href="https://console.clockworkvenue.com" data-testid="nav-login">Log in</a>
   </nav>
 </header>
-<main id="main"><section class="hero" data-testid="hero">
-  <h1 class="bg-gradient" data-testid="hero-title">Run every shift like clockwork.</h1>
-    <div class="ctas">
-      <a class="cta-primary" href="https://console.clockworkvenue.com" data-testid="cta-login">Log in</a>
-      <a class="cta-ghost" href="https://console.clockworkvenue.com" data-testid="cta-signup">Sign up to test</a>
-      <a class="cta-ghost" href="#waitlist" data-testid="cta-waitlist">Join the waitlist</a>
-    </div>
-<p>Clockwork Venue keeps DJs, hosts, and floor staff synced so nights run smoother, guests stay longer, and revenue follows.</p>
-<p><strong>What it replaces:</strong> whiteboards, sticky notes, and scattered messages.<br><strong>What you get:</strong> a shared source of truth that updates in real time.</p>
+<main id="main" class="site-main">
 
+<section class="hero-splash" data-testid="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Clockwork Venue Platform</span>
+    <h1 class="hero-title" data-testid="hero-title">Run every shift like clockwork.</h1>
+    <div class="hero-copy">
+      <p>Clockwork Venue keeps DJs, hosts, and floor staff synced so nights run smoother, guests stay longer, and revenue follows.</p><p><strong>What it replaces:</strong> whiteboards, sticky notes, and scattered messages.<br><strong>What you get:</strong> a shared source of truth that updates in real time.</p>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn primary" href="https://console.clockworkvenue.com" data-testid="cta-login">Log in</a>
+      <a class="btn outline" href="https://console.clockworkvenue.com" data-testid="cta-signup">Sign up to test</a>
+      <a class="btn ghost" href="#waitlist" data-testid="cta-waitlist">Join the waitlist</a>
+    </div>
+    <p class="hero-subnote">No new hardware required. DJs, hosts, and monitors stay in sync from the same console.</p>
+  </div>
 </section>
-  <details class="card" data-testid="login-views">
-    <summary>Log in to a specific view</summary>
-    <div class="select">
-      <label for="view">Choose view:</label>
-      <select id="view" data-testid="login-view-select">
+
+<section class="section login-stack">
+  <div class="login-card" data-testid="login-views">
+    <h2>Jump back into the console</h2>
+    <p class="login-intro">Pick the view you use most and head straight into the Clockwork Venue Console.</p>
+    <div class="login-picker">
+      <label for="login-view-select">View</label>
+      <select id="login-view-select">
         <option value="https://console.clockworkvenue.com/dj">DJ</option>
         <option value="https://console.clockworkvenue.com/host">Host</option>
         <option value="https://console.clockworkvenue.com/monitor">Monitor</option>
       </select>
-      <button id="go" data-testid="login-view-go">Go</button>
+      <button id="login-view-go">Go</button>
     </div>
-    <p>Quick links:
-      <a href="https://console.clockworkvenue.com/dj" data-testid="login-dj">DJ</a> ·
-      <a href="https://console.clockworkvenue.com/host" data-testid="login-host">Host</a> ·
-      <a href="https://console.clockworkvenue.com/monitor" data-testid="login-monitor">Monitor</a>
-    </p>
-  </details><section id="waitlist" data-testid="waitlist" class="section card"><p>Waitlist box will remain as in the live site for now.</p></section>
-  <script>
-  (function(){
-    const s=document.getElementById('view'), b=document.getElementById('go');
-    if(s&&b){ b.addEventListener('click',()=>{ const href=s.value; if(href) location.href = href; }); }
-  })();
-  </script></main>
+    <p class="login-quick">Quick links: <a href="https://console.clockworkvenue.com/dj" data-testid="login-dj">DJ</a><span class="login-divider">/</span> <a href="https://console.clockworkvenue.com/host" data-testid="login-host">Host</a><span class="login-divider">/</span> <a href="https://console.clockworkvenue.com/monitor" data-testid="login-monitor">Monitor</a></p>
+  </div>
+</section>
+
+<section class="section module-band">
+  <div class="section-header">
+    <h2>Modules built for every shift</h2>
+    <p>Rotate, Floor, DJ, Admin, and Reports keep the whole house aligned without bolting on extra tools.</p>
+  </div>
+  <div class="module-grid" data-testid="feature-grid">
+    <article class="module-card">
+  <span class="module-kicker">Booth control</span>
+  <h3>Rotate</h3>
+  <p>Smooth stage scheduling and handoffs</p>
+  <ul><li>Advance stages with one tap</li><li>Timers keep every performer on schedule</li><li>Set custom stage orders for theme nights</li></ul>
+</article><article class="module-card">
+  <span class="module-kicker">Host tools</span>
+  <h3>Floor</h3>
+  <p>Host tools for assignments, counts, and coordination</p>
+  <ul><li>Track floor checks and table status</li><li>Log guest spend and comp activity</li><li>Leave handoff notes for the next shift</li></ul>
+</article><article class="module-card">
+  <span class="module-kicker">Rotation view</span>
+  <h3>DJ</h3>
+  <p>Live rotation board plus cues the whole team can trust</p>
+  <ul><li>Project rotation to monitors across the club</li><li>See timers and lineup without leaving the booth</li><li>Drop in announcements and VIP cues</li></ul>
+</article><article class="module-card">
+  <span class="module-kicker">Setup</span>
+  <h3>Admin</h3>
+  <p>Roles, rules, and setup that fits your house</p>
+  <ul><li>Configure stages, shift cadence, and rotation order</li><li>Manage staff access with role-based permissions</li><li>Archive nights and reopen them for audits</li></ul>
+</article><article class="module-card">
+  <span class="module-kicker">Nightly insights</span>
+  <h3>Reports</h3>
+  <p>Nightly summaries you can act on</p>
+  <ul><li>Export shifts with counts, spend, and notes</li><li>Spot trends across weeks and locations</li><li>Share clean recaps with owners and partners</li></ul>
+</article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="flow-band">
+    <h3>How a night runs on Clockwork Venue</h3>
+    <ol class="flow-steps">
+      <li>
+  <span class="step-index">1</span>
+  <div>
+    <h4>Prep the night</h4>
+    <p>Load tonight's roster, define stage order, and pin any floor priorities or VIP holds.</p>
+  </div>
+</li><li>
+  <span class="step-index">2</span>
+  <div>
+    <h4>Run every shift</h4>
+    <p>Hosts, DJs, and monitors stay in sync with live rotation, timers, and status boards.</p>
+  </div>
+</li><li>
+  <span class="step-index">3</span>
+  <div>
+    <h4>Review and hand off</h4>
+    <p>Exports land in inboxes so owners and partners see the story of the night without chasing staff.</p>
+  </div>
+</li>
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="highlight-grid">
+    <article class="highlight-card">
+  <h4>Heads-up displays</h4>
+  <p>Mirror the current lineup on any back-of-house monitor so performers know exactly when they are on deck.</p>
+</article><article class="highlight-card">
+  <h4>Shift memory</h4>
+  <p>Log comps, VIP notes, and floor adjustments that the next team can pick up instantly.</p>
+</article><article class="highlight-card">
+  <h4>Compliance ready</h4>
+  <p>Keep a clean record of rotations, hours, and staffing for owners, auditors, and investors.</p>
+</article>
+  </div>
+</section>
+
+<section class="section support-band">
+  <article class="panel" data-testid="faq">
+    <h3>FAQ</h3>
+    <div class="faq-list">
+      <details>
+  <summary>Can DJs/hosts log in from the website?</summary>
+  <div class="faq-answer"><p>Yes. Use the <strong>Log in</strong> button or pick <strong>DJ / Host / Monitor</strong> from the view selector.</p></div>
+</details><details>
+  <summary>Does Clockwork Venue handle payouts or money?</summary>
+  <div class="faq-answer"><p>No. We keep operations synced (Rotate, Floor, DJ, Admin, Reports) and leave payments to your existing flow.</p></div>
+</details>
+    </div>
+  </article>
+  <article class="panel" data-testid="pricing-contact">
+    <h3>Get in touch</h3>
+    <div class="pricing-copy"><p>We are onboarding a limited set of venues. <strong>Contact us</strong> for access and pricing that fits your floor.</p>
+</div>
+    <div class="contact-copy"><p><strong>Want early access?</strong>  </p>
+<ul>
+<li><strong>Sign up to test</strong> (we will get you set up)  </li>
+<li><strong>Join the waitlist</strong> (legacy waitlist box preserved below)</li>
+</ul>
+<p>Or email us anytime.</p>
+</div>
+    <div class="contact-cta">
+      <a class="surface-button primary" href="https://console.clockworkvenue.com">Log in</a>
+      <a class="surface-button" href="https://console.clockworkvenue.com">Sign up to test</a>
+      <a class="surface-button" href="mailto:hello@clockworkvenue.com">Contact us</a>
+    </div>
+    <section id="waitlist" data-testid="waitlist" class="waitlist-slot">
+      <div class="waitlist-placeholder" data-waitlist-placeholder="true">
+        <h4>Legacy waitlist box</h4>
+        <p>Drop the StageFlow waitlist markup back into the live site and rerun the composer. This card will mirror it automatically.</p>
+      </div>
+    </section>
+  </article>
+</section>
+
+<script>
+(function(){
+  var select = document.getElementById("login-view-select");
+  var go = document.getElementById("login-view-go");
+  if (select && go) {
+    go.addEventListener("click", function(){
+      var href = select.value;
+      if (href && href !== "#") {
+        window.location.href = href;
+      }
+    });
+  }
+})();
+</script>
+
+</main>
 <footer data-testid="footer">
   <div class="section">
-    <p>© 2025 Clockwork Venue</p>
-    <p>Support:
-      
-      
-    </p>
+    <p>(c) 2025 Clockwork Venue</p>
+    <p>Support: Resources coming soon.</p>
     <p><a href="mailto:hello@clockworkvenue.com" data-testid="footer-email">hello@clockworkvenue.com</a></p>
   </div>
 </footer>
-
-</body></html>
+</body>
+</html>

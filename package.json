@@ -13,7 +13,9 @@
     "typecheck": "tsc --noEmit",
     "website:compose": "node scripts/compose-content.mjs",
     "website:smoke": "node scripts/website-smoke.mjs",
-    "website:legacy:init": "node scripts/setup-legacy-local.mjs"
+    "website:legacy:init": "node scripts/setup-legacy-local.mjs",
+    "website:swap:home": "node scripts/swap-home-to-live.mjs",
+    "website:swap:home:revert": "node scripts/revert-home-from-backup.mjs"
   },
   "packageManager": "npm@10.8.2",
   "engines": {
