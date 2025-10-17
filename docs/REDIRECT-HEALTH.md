@@ -12,3 +12,10 @@
 
 StageFlow + Clockwork: PASS
 Clockwork health: PASS
+### 2025-10-17 - Probe E (cw-www)
+
+| Probe | Start URL | Final URL | Status | Redirect Hops | Path+Query OK | Console Errs | 4xx/5xx | SW? | Artifacts |
+|---|---|---|---:|---|---|---:|---:|---|---|
+| E | https://www.clockworkvenue.com/test?x=1 | https://www.clockworkvenue.com/test?x=1 | 200 | 200 | OK | 0 | 0 | No | docs/_mcp-artifacts/mcp-REDIRECT-CHECK-20251017-034459-cw-www.json, docs/_mcp-artifacts/mcp-REDIRECT-CHECK-20251017-034459-cw-www.png |
+
+_Result: PASS_
