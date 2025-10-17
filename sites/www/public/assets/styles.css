@@ -1,0 +1,27 @@
+:root{
+  --deep-blue:#0A2540; --aqua:#1FB8C6; --electric:#3F8CFF;
+  --ink:#08131E; --paper:#F4F6F8; --success:#18B06B;
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--paper)}
+.site-header{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem 1.25rem; background:#fff; border-bottom:1px solid rgba(10,37,64,.08)}
+.brand{display:flex; align-items:center; gap:.625rem; text-decoration:none}
+.brand-name{font-weight:700; letter-spacing:.2px; color:var(--deep-blue)}
+.brand-mark{width:28px; height:28px}
+.nav{display:flex; gap:.75rem}
+.nav-link{color:var(--deep-blue); text-decoration:none; font-weight:600}
+.nav-link:hover{text-decoration:underline}
+.hero{max-width:960px; margin:8vh auto 0; padding:0 1.25rem; text-align:center}
+.hero h1{font-size:clamp(2rem, 3.4vw + 1rem, 3rem); margin:.25rem 0 .5rem; color:var(--deep-blue)}
+.tagline{font-size:1.125rem; color:#2a3a4a; margin:0 auto 1.25rem; max-width:42rem}
+.cta-row{display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; margin-top:1rem}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.8rem 1.1rem; border-radius:.875rem; border:1px solid transparent; text-decoration:none; font-weight:700; letter-spacing:.2px}
+.btn.primary{background:var(--deep-blue); color:#fff}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.ghost{background:#fff; border-color:rgba(10,37,64,.12); color:var(--deep-blue)}
+.btn.ghost:hover{border-color:rgba(10,37,64,.25)}
+.about{max-width:960px; margin:8vh auto; padding:0 1.25rem}
+.about h2{color:var(--deep-blue)}
+.bullets{list-style:none; padding:0; margin:1rem auto; max-width:44rem}
+.bullets li{background:#fff; border:1px solid rgba(10,37,64,.08); border-radius:12px; padding:.9rem 1rem; margin:.5rem 0}
+.site-footer{text-align:center; color:#4a5a6a; padding:4rem 1rem}

@@ -1,31 +1,52 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Clockwork Venue — Marketing</title>
-<link rel="icon" href="/favicon.ico" />
-<meta name="description" content="Clockwork Venue — modern rotation & club ops." />
-<style>
-:root{--blue:#0A2540;--aqua:#1FB8C6;--elec:#3F8CFF;--bg:#F4F6F8;--ink:#08131E}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-.container{max-width:880px;margin:10vh auto;padding:24px}
-.card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 10px 30px rgba(10,37,64,.12)}
-h1{color:var(--blue);margin:0 0 12px}
-p{line-height:1.5}
-a.button{display:inline-block;padding:12px 18px;border-radius:12px;text-decoration:none;background:var(--elec);color:#fff}
-.small{color:#556}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clockwork Venue ? Console for Night Operations</title>
+  <meta name="description" content="Run every shift like clockwork: live rotation, VIP timers, payouts, and reports in one console." />
+  <meta property="og:title" content="Clockwork Venue ? Console for Night Operations" />
+  <meta property="og:description" content="Run every shift like clockwork: live rotation, VIP timers, payouts, and reports in one console." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.clockworkvenue.com/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="/assets/styles.css" as="style" />
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
-  <main class="container">
-    <section class="card">
-      <h1>Clockwork Venue</h1>
-      <p>This is a safe placeholder so preview deploys return <strong>200 OK</strong> while we finish the full marketing site.</p>
-      <p><a class="button" href="https://console.clockworkvenue.com">Open Console</a></p>
-      <p class="small">© <span id="y"></span> Clockwork Venue</p>
-    </section>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/assets/logo.svg" alt="" aria-hidden="true" />
+      <span class="brand-name">Clockwork Venue</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link" href="https://console.clockworkvenue.com">Open Console</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <h1>Run every shift like clockwork.</h1>
+    <p class="tagline">Live rotation, VIP timers, payouts, and reports in one console.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="https://console.clockworkvenue.com">Open Console</a>
+      <a class="btn ghost" href="#about">Learn more</a>
+    </div>
   </main>
-<script>document.getElementById("y").textContent=new Date().getFullYear()</script>
+
+  <section id="about" class="about">
+    <h2>The Console for night operations</h2>
+    <ul class="bullets">
+      <li><strong>Rotation:</strong> On-deck queues and stage flow that never stalls.</li>
+      <li><strong>VIP:</strong> Start/stop timers with clear status at a glance.</li>
+      <li><strong>Pay & Reports:</strong> End-of-night payouts and shift summaries.</li>
+    </ul>
+    <p class="footnote">Already a customer? Use the button above to launch the Console.</p>
+  </section>
+
+  <footer class="site-footer">
+    <p>? <span id="y"></span> Clockwork Venue. All rights reserved.</p>
+  </footer>
+
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

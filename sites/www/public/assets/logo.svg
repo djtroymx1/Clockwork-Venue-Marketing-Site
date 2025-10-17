@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Clockwork Venue">
+  <circle cx="32" cy="32" r="30" fill="#0A2540"/>
+  <path fill="#1FB8C6" d="M32 14a18 18 0 1 0 0 36 2 2 0 0 0 0-4 14 14 0 1 1 0-28 2 2 0 0 0 0-4z"/>
+  <path fill="#3F8CFF" d="M33 20h-3v12l9 5 1.5-2.6-7.5-4.2V20z"/>
+</svg>
