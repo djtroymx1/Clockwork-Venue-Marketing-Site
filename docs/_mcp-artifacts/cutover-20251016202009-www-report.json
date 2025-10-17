@@ -1,0 +1,38 @@
+﻿{
+  "targetUrl": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app",
+  "selectedPageUrl": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+  "matchedRequestUrl": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+  "finalStatusSummary": "[failed - 404]",
+  "finalStatusCode": 404,
+  "redirectChain": [
+    {
+      "url": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+      "method": "GET",
+      "statusSummary": "[failed - 404]",
+      "statusCode": 404,
+      "ok": false
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app/",
+      "method": "GET",
+      "statusSummary": "[failed - 404]",
+      "statusCode": 404,
+      "ok": false
+    }
+  ],
+  "consoleMessages": [
+    "Error> Failed to load resource: the server responded with a status of 404 ()",
+    ":undefined:undefined"
+  ],
+  "clearSiteData": {
+    "origin": "https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app",
+    "localStorageCleared": true,
+    "sessionStorageCleared": true,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": []
+  }
+}

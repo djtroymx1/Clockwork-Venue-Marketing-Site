@@ -36,6 +36,13 @@ Plain-language guardrails to follow before promoting the Clockwork cutover to pr
 - Apex redirect preview: https://clockworkvenueapex--cutover-20251016202009-yvqrrw7r.web.app
 - Stageflow legacy preview: https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app
 
+| site | url | status / final stop | console errors | notes |
+| --- | --- | --- | --- | --- |
+| Apex redirect | https://clockworkvenueapex--cutover-20251016202009-yvqrrw7r.web.app | 308 → https://www.clockworkvenue.com/ (200) | none | Redirect jumps straight to the production www domain; path preserved, but still references production host |
+| Marketing | https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app | 404 | 2 (favicon + page) | Static build missing; Next.js site not yet exported for Hosting preview |
+| Stageflow legacy | https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app | 404 | 2 (favicon + page) | Legacy content not staged; current config points at `public/` but no HTML snapshot is present |
+| Console SPA | https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app | 200 | none | Static shell serves correctly (index + favicon) |
+
 ## 6. Rollback Playbook
 - Hosting rollback: Firebase Console → Hosting → View releases → Roll back the affected site (`clockwork-console`, `clockwork-www`, `clockwork-apex`, or `stageflow-legacy`).
 - Console SPA: redeploy the last known good commit (e.g., `firebase deploy --only hosting:clockwork-console --message "Rollback"`).

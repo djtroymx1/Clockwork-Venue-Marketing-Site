@@ -1,0 +1,37 @@
+﻿{
+  "targetUrl": "https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app",
+  "selectedPageUrl": "https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app/",
+  "matchedRequestUrl": "https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app/",
+  "finalStatusSummary": "[success - 200]",
+  "finalStatusCode": 200,
+  "redirectChain": [
+    {
+      "url": "https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "consoleMessages": [
+    "<no console messages found>"
+  ],
+  "clearSiteData": {
+    "origin": "https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app",
+    "localStorageCleared": true,
+    "sessionStorageCleared": true,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": []
+  }
+}

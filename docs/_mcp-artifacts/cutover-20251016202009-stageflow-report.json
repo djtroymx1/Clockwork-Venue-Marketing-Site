@@ -1,0 +1,38 @@
+﻿{
+  "targetUrl": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app",
+  "selectedPageUrl": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+  "matchedRequestUrl": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+  "finalStatusSummary": "[failed - 404]",
+  "finalStatusCode": 404,
+  "redirectChain": [
+    {
+      "url": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+      "method": "GET",
+      "statusSummary": "[failed - 404]",
+      "statusCode": 404,
+      "ok": false
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app/",
+      "method": "GET",
+      "statusSummary": "[failed - 404]",
+      "statusCode": 404,
+      "ok": false
+    }
+  ],
+  "consoleMessages": [
+    "Error> Failed to load resource: the server responded with a status of 404 ()",
+    ":undefined:undefined"
+  ],
+  "clearSiteData": {
+    "origin": "https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app",
+    "localStorageCleared": true,
+    "sessionStorageCleared": true,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": []
+  }
+}
