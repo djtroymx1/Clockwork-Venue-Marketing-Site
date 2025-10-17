@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import { Suspense } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import { legalConfig } from '@/lib/legal';
 import { CookieConsentBanner } from '@/components/cookie-consent-banner';
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.React.Node;
+  children: ReactNode;
 }>) {
   const organizationSchema = {
     "@context": "https://schema.org",
