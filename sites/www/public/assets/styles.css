@@ -25,3 +25,5 @@ body{margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cant
 .bullets{list-style:none; padding:0; margin:1rem auto; max-width:44rem}
 .bullets li{background:#fff; border:1px solid rgba(10,37,64,.08); border-radius:12px; padding:.9rem 1rem; margin:.5rem 0}
 .site-footer{text-align:center; color:#4a5a6a; padding:4rem 1rem}
+.notice{background:#eaf6ff;border:1px solid rgba(63,140,255,.25);color:#0A2540;padding:.75rem 1rem;text-align:center}
+.notice a{font-weight:700;color:#0A2540;text-decoration:underline}
