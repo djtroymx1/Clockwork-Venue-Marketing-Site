@@ -30,6 +30,12 @@ Plain-language guardrails to follow before promoting the Clockwork cutover to pr
 - Verify the deployment summary lists the four hosting targets and that each was released to production.
 - Spot-check the live domains immediately after go-live.
 
+## Preview cutover-20251016202009
+- Console preview: https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app
+- Marketing preview: https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app
+- Apex redirect preview: https://clockworkvenueapex--cutover-20251016202009-yvqrrw7r.web.app
+- Stageflow legacy preview: https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app
+
 ## 6. Rollback Playbook
 - Hosting rollback: Firebase Console → Hosting → View releases → Roll back the affected site (`clockwork-console`, `clockwork-www`, `clockwork-apex`, or `stageflow-legacy`).
 - Console SPA: redeploy the last known good commit (e.g., `firebase deploy --only hosting:clockwork-console --message "Rollback"`).
