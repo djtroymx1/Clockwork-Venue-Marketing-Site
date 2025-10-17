@@ -1,0 +1,42 @@
+{
+  "targetUrl": "https://console.clockworkvenue.com/",
+  "selectedPageUrl": "https://console.clockworkvenue.com/",
+  "matchedRequestUrl": "https://console.clockworkvenue.com/",
+  "finalStatusSummary": "[success - 200]",
+  "finalStatusCode": 200,
+  "redirectChain": [
+    {
+      "url": "https://console.clockworkvenue.com/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://console.clockworkvenue.com/",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "consoleMessages": [
+    "<no console messages found>"
+  ],
+  "clearSiteData": {
+    "origin": "https://console.clockworkvenue.com",
+    "localStorageCleared": true,
+    "sessionStorageCleared": true,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": []
+  },
+  "serviceWorker": {
+    "supported": true,
+    "registrations": []
+  },
+  "screenshotPath": "docs/_mcp-artifacts/mcp-REDIRECT-FINAL-20251017-064423-cw-console-root.png"
+}

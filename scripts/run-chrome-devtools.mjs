@@ -3,11 +3,47 @@
  * Utility script to interact with the chrome-devtools MCP server and collect
  * diagnostics for a single URL.
  */
+import fs from "node:fs/promises";
+import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
-const TARGET_URL = process.argv[2] ?? "https://clockworkvenue.com";
+const rawArgs = process.argv.slice(2);
+const parsed = {
+  url: null,
+  out: null,
+  positional: [],
+  flags: new Set(),
+};
+
+for (let i = 0; i < rawArgs.length; i++) {
+  const arg = rawArgs[i];
+  if (arg.startsWith("--")) {
+    const key = arg.slice(2);
+    if (key === "url" || key === "out") {
+      if (i + 1 >= rawArgs.length) {
+        throw new Error(`Missing value for --${key}`);
+      }
+      parsed[key] = rawArgs[++i];
+    } else {
+      parsed.flags.add(key);
+    }
+  } else {
+    parsed.positional.push(arg);
+  }
+}
+
+const TARGET_URL = parsed.url ?? parsed.positional[0] ?? "https://clockworkvenue.com";
 const MAX_CONSOLE_MESSAGES = 10;
+const wantsScreenshot = parsed.flags.has("screenshot");
+const outputPath = parsed.out ?? null;
+const screenshotPath =
+  wantsScreenshot && outputPath
+    ? outputPath.replace(/\.json$/i, ".png")
+    : wantsScreenshot
+      ? null
+      : null;
+const shouldClearSiteData = parsed.flags.has("clearSiteData") || !parsed.flags.size;
 
 const CLEAR_SITE_DATA_FUNCTION = String.raw`async () => {
   const summary = {
@@ -89,6 +125,27 @@ const CLEAR_SITE_DATA_FUNCTION = String.raw`async () => {
   }
 
   return summary;
+}`;
+
+const SERVICE_WORKER_INFO_FUNCTION = String.raw`async () => {
+  try {
+    if (!("serviceWorker" in navigator)) {
+      return { supported: false, registrations: [] };
+    }
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    return {
+      supported: true,
+      registrations: registrations.map((reg) => ({
+        scope: reg.scope ?? null,
+      })),
+    };
+  } catch (error) {
+    return {
+      supported: true,
+      error: error?.message ?? String(error),
+      registrations: [],
+    };
+  }
 }`;
 
 function getTextContent(result) {
@@ -291,8 +348,22 @@ async function main() {
     version: "0.1.0",
   });
 
+  let screenshotTool;
+
   try {
     await client.connect(transport);
+
+    if (wantsScreenshot) {
+      try {
+        const toolsResult = await client.listTools({});
+        screenshotTool = toolsResult?.tools?.find((tool) => /screenshot/i.test(tool.name));
+        if (!screenshotTool && wantsScreenshot) {
+          console.warn("No MCP screenshot tool found; skipping PNG capture.");
+        }
+      } catch (error) {
+        console.warn("Unable to enumerate MCP tools for screenshots:", error instanceof Error ? error.message : String(error));
+      }
+    }
 
     await client.callTool({
       name: "new_page",
@@ -347,12 +418,68 @@ async function main() {
     const consoleText = getTextContent(consoleResult);
     const consoleMessages = parseConsoleMessages(consoleText, MAX_CONSOLE_MESSAGES);
 
-    const clearResult = await client.callTool({
-      name: "evaluate_script",
-      arguments: { function: CLEAR_SITE_DATA_FUNCTION },
-    });
-    const clearResultText = getTextContent(clearResult);
-    const clearSiteData = parseJsonBlock(clearResultText);
+    let clearSiteData = null;
+    if (shouldClearSiteData) {
+      const clearResult = await client.callTool({
+        name: "evaluate_script",
+        arguments: { function: CLEAR_SITE_DATA_FUNCTION },
+      });
+      const clearResultText = getTextContent(clearResult);
+      clearSiteData = parseJsonBlock(clearResultText);
+    }
+
+    let serviceWorkerInfo = null;
+    try {
+      const swResult = await client.callTool({
+        name: "evaluate_script",
+        arguments: { function: SERVICE_WORKER_INFO_FUNCTION },
+      });
+      const swText = getTextContent(swResult);
+      serviceWorkerInfo = parseJsonBlock(swText);
+    } catch (error) {
+      serviceWorkerInfo = {
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+
+    let pngWritten = null;
+    if (wantsScreenshot && outputPath) {
+      if (screenshotTool) {
+        try {
+          const screenshotResult = await client.callTool({
+            name: screenshotTool.name,
+            arguments: { fullPage: true },
+          });
+          const contentItems = screenshotResult?.content ?? [];
+          const imageItem =
+            contentItems.find((item) => item?.type === "image" && item?.base64) ??
+            contentItems.find((item) => item?.type === "image" && item?.data) ??
+            contentItems.find((item) => item?.type === "image" && item?.content);
+          const base64 =
+            imageItem?.base64 ?? imageItem?.data ?? imageItem?.content ?? null;
+          if (base64) {
+            const pngPath =
+              screenshotPath ??
+              outputPath.replace(/\.json$/i, ".png");
+            await fs.mkdir(path.dirname(pngPath), { recursive: true });
+            await fs.writeFile(pngPath, Buffer.from(base64, "base64"));
+            const pngRelative = path.relative(process.cwd(), pngPath);
+            pngWritten =
+              pngRelative && !pngRelative.startsWith("..")
+                ? pngRelative.replace(/\\/g, "/")
+                : pngPath;
+          } else {
+            console.warn(`Screenshot tool ${screenshotTool.name} returned no image content; skipping PNG.`);
+          }
+        } catch (error) {
+          console.warn(`Screenshot capture failed via tool ${screenshotTool.name}:`, error instanceof Error ? error.message : String(error));
+        }
+      } else {
+        console.warn("No MCP screenshot tool available; skipping PNG.");
+      }
+    } else if (wantsScreenshot && !outputPath) {
+      console.warn("Screenshot requested but --out path missing; skipping PNG.");
+    }
 
     const output = {
       targetUrl: TARGET_URL,
@@ -364,9 +491,16 @@ async function main() {
       documentRequests,
       consoleMessages,
       clearSiteData,
+      serviceWorker: serviceWorkerInfo,
+      screenshotPath: pngWritten,
     };
 
-    console.log(JSON.stringify(output, null, 2));
+    if (outputPath) {
+      await fs.mkdir(path.dirname(outputPath), { recursive: true });
+      await fs.writeFile(outputPath, JSON.stringify(output, null, 2), "utf8");
+    } else {
+      console.log(JSON.stringify(output, null, 2));
+    }
   } finally {
     await client.close().catch(() => {});
   }

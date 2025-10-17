@@ -1,39 +1,34 @@
 $ErrorActionPreference = "Stop"
 
 function Test-Dns {
-  param(
-    [string]$Host,
-    [string[]]$Resolvers = @("1.1.1.1", "8.8.8.8")
-  )
-  foreach ($r in $Resolvers) {
-    $result = nslookup $Host $r | Select-String -Pattern 'Address:\s+([\d\.]+)' -AllMatches
-    $addresses = $result.Matches | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
-    Write-Host "DNS $Host @ $r => $($addresses -join ', ')" 
+  param([string]$Domain, [string[]]$Resolvers = @("1.1.1.1","8.8.8.8"))
+  foreach ($resolver in $Resolvers) {
+    $query = nslookup $Domain $resolver | Select-String -Pattern "Address:\s+([\d\.]+)" -AllMatches
+    $addresses = $query.Matches | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
+    if ($addresses.Count -eq 0) {
+      Write-Host "DNS $Domain @ $resolver => (no address records returned)"
+    } else {
+      Write-Host "DNS $Domain @ $resolver => $($addresses -join ', ')"
+    }
   }
 }
 
 function Head {
   param([string]$Url)
   $resp = curl.exe -s -I $Url
-  $codeMatch = ($resp | Select-String -Pattern '^HTTP/.* (\d{3})' -AllMatches).Matches
+  $codeMatch = ($resp | Select-String -Pattern "^HTTP/.* (\d{3})" -AllMatches).Matches
   $code = if ($codeMatch.Count) { $codeMatch[0].Groups[1].Value } else { "?" }
-  $locations = ($resp | Select-String -Pattern '^Location:\s*(.+)') | ForEach-Object { $_.Line.Trim() }
-  $stsHeaders = ($resp | Select-String -Pattern '^Strict-Transport-Security:\s*(.+)') | ForEach-Object { $_.Line.Trim() }
+  $loc  = ($resp | Select-String -Pattern "^Location:\s*(.+)") | ForEach-Object { $_.Line.Trim() }
+  $sts  = ($resp | Select-String -Pattern "^Strict-Transport-Security:\s*(.+)") | ForEach-Object { $_.Line.Trim() }
   Write-Host "`n$Url => $code"
-  foreach ($loc in $locations) { Write-Host $loc }
-  foreach ($sts in $stsHeaders) { Write-Host $sts }
+  if ($loc) { Write-Host $loc }
+  if ($sts) { Write-Host $sts }
 }
 
-$hosts = @(
-  "clockworkvenue.com",
-  "www.clockworkvenue.com",
-  "console.clockworkvenue.com",
-  "stageflowlive.com",
-  "www.stageflowlive.com"
-)
+# DNS checks
+@("clockworkvenue.com","www.clockworkvenue.com","console.clockworkvenue.com","stageflowlive.com","www.stageflowlive.com") | ForEach-Object { Test-Dns -Domain $_ }
 
-$hosts | ForEach-Object { Test-Dns $_ }
-
+# HTTP/S redirect & header checks
 Head "http://clockworkvenue.com/test?x=1"
 Head "https://clockworkvenue.com/test?x=1"
 Head "https://www.clockworkvenue.com/test?x=1"

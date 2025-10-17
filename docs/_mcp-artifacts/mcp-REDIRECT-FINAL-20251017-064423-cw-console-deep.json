@@ -1,0 +1,42 @@
+{
+  "targetUrl": "https://console.clockworkvenue.com/deep/link",
+  "selectedPageUrl": "https://console.clockworkvenue.com/deep/link",
+  "matchedRequestUrl": "https://console.clockworkvenue.com/deep/link",
+  "finalStatusSummary": "[success - 200]",
+  "finalStatusCode": 200,
+  "redirectChain": [
+    {
+      "url": "https://console.clockworkvenue.com/deep/link",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "documentRequests": [
+    {
+      "url": "https://console.clockworkvenue.com/deep/link",
+      "method": "GET",
+      "statusSummary": "[success - 200]",
+      "statusCode": 200,
+      "ok": true
+    }
+  ],
+  "consoleMessages": [
+    "<no console messages found>"
+  ],
+  "clearSiteData": {
+    "origin": "https://console.clockworkvenue.com",
+    "localStorageCleared": true,
+    "sessionStorageCleared": true,
+    "cachesCleared": [],
+    "indexedDBCleared": [],
+    "cookiesCleared": [],
+    "notes": []
+  },
+  "serviceWorker": {
+    "supported": true,
+    "registrations": []
+  },
+  "screenshotPath": "docs/_mcp-artifacts/mcp-REDIRECT-FINAL-20251017-064423-cw-console-deep.png"
+}
