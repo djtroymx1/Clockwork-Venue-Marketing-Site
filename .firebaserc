@@ -1,0 +1,23 @@
+{
+  "projects": {
+    "default": "stageflow-marketing-site"
+  },
+  "targets": {
+    "stageflow-marketing-site": {
+      "hosting": {
+        "clockwork-console": [
+          "clockwork-console"
+        ],
+        "clockwork-www": [
+          "clockworkvenue"
+        ],
+        "clockwork-apex": [
+          "clockworkvenueapex"
+        ],
+        "stageflow-legacy": [
+          "stageflow-marketing-site"
+        ]
+      }
+    }
+  }
+}
