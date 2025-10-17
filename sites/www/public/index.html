@@ -14,35 +14,45 @@
   <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
-  <div class="notice">Returning StageFlow user? <a href="https://console.clockworkvenue.com">Log in to the Console</a>.</div>
   <header class="site-header">
     <a class="brand" href="/">
-      <img class="brand-mark" src="/assets/logo.svg" alt="" aria-hidden="true" />
-      <span class="brand-name">Clockwork Venue</span>
+      <!-- BEGIN brand lockup -->
+      <img
+        src="/assets/brand/logo-monogram-256.png"
+        alt=""
+        class="brand-icon"
+        width="28" height="28"
+        loading="lazy" decoding="async" />
+      <img
+        src="/assets/brand/logo-wordmark-800.png"
+        alt="Clockwork Venue"
+        class="brand-wordmark"
+        height="20"
+        loading="lazy" decoding="async" />
+      <!-- END brand lockup -->
     </a>
     <nav class="nav">
       <a class="nav-link" href="https://console.clockworkvenue.com">Log in</a>
     </nav>
   </header>
 
-  <main class="hero">
-    <h1>Run every shift like clockwork.</h1>
-    <p class="tagline">Live rotation, VIP timers, payouts, and reports in one console.</p>
-    <div class="cta-row">
-      <a class="btn primary" href="https://console.clockworkvenue.com">Log in</a>
-      <a class="btn ghost" href="#about">Learn more</a>
-    </div>
-  </main>
+  <main class="announce-only" id="content">
+    <section aria-label="Brand update" class="announce-card" role="status">
+      <h1 class="announce-title">StageFlow is now Clockwork Venue</h1>
+      <p class="announce-copy">
+        New name, same mission. We’re rolling out a refreshed website and polish,
+        but your login and data stay the same. Thanks for sticking with us—what’s
+        coming next will make every shift smoother and faster.
+        <span class="announce-tagline">Run every shift like clockwork.</span>
+      </p>
 
-  <section id="about" class="about">
-    <h2>The Console for night operations</h2>
-    <ul class="bullets">
-      <li><strong>Rotation:</strong> On-deck queues and stage flow that never stalls.</li>
-      <li><strong>VIP:</strong> Start/stop timers with clear status at a glance.</li>
-      <li><strong>Pay & Reports:</strong> End-of-night payouts and shift summaries.</li>
-    </ul>
-    <p class="footnote">Already a customer? Use the button above to launch the Console.</p>
-  </section>
+      <!-- Keep the existing login experience. Prefer the real console URL if known.
+           If uncertain, use /login (already configured to redirect to the Console). -->
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/login">Log in</a>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer">
     <p>? <span id="y"></span> Clockwork Venue. All rights reserved.</p>
