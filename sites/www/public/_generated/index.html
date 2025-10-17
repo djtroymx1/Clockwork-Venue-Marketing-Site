@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home - Clockwork Venue</title>
+<meta name="description" content="Rotation, floor coordination, DJ flow, admin controls, and reports - finally in sync.">
+<link rel="stylesheet" href="/assets/site.generated.css">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<header>
+  <a href="/" data-testid="nav-logo" class="logo"><strong>Clockwork Venue</strong></a>
+  <nav class="nav">
+    <a href="https://console.clockworkvenue.com" data-testid="nav-login">Log in</a>
+  </nav>
+</header>
+<main id="main"><section class="hero" data-testid="hero">
+  <h1 class="bg-gradient" data-testid="hero-title">Run every shift like clockwork.</h1>
+    <div class="ctas">
+      <a class="cta-primary" href="https://console.clockworkvenue.com" data-testid="cta-login">Log in</a>
+      <a class="cta-ghost" href="https://console.clockworkvenue.com" data-testid="cta-signup">Sign up to test</a>
+      <a class="cta-ghost" href="#waitlist" data-testid="cta-waitlist">Join the waitlist</a>
+    </div>
+<p>Clockwork Venue keeps DJs, hosts, and floor staff synced so nights run smoother, guests stay longer, and revenue follows.</p>
+<p><strong>What it replaces:</strong> whiteboards, sticky notes, and scattered messages.<br><strong>What you get:</strong> a shared source of truth that updates in real time.</p>
+
+</section>
+  <details class="card" data-testid="login-views">
+    <summary>Log in to a specific view</summary>
+    <div class="select">
+      <label for="view">Choose view:</label>
+      <select id="view" data-testid="login-view-select">
+        <option value="https://console.clockworkvenue.com/dj">DJ</option>
+        <option value="https://console.clockworkvenue.com/host">Host</option>
+        <option value="https://console.clockworkvenue.com/monitor">Monitor</option>
+      </select>
+      <button id="go" data-testid="login-view-go">Go</button>
+    </div>
+    <p>Quick links:
+      <a href="https://console.clockworkvenue.com/dj" data-testid="login-dj">DJ</a> ·
+      <a href="https://console.clockworkvenue.com/host" data-testid="login-host">Host</a> ·
+      <a href="https://console.clockworkvenue.com/monitor" data-testid="login-monitor">Monitor</a>
+    </p>
+  </details><section id="waitlist" data-testid="waitlist" class="section card"><p>Waitlist box will remain as in the live site for now.</p></section>
+  <script>
+  (function(){
+    const s=document.getElementById('view'), b=document.getElementById('go');
+    if(s&&b){ b.addEventListener('click',()=>{ const href=s.value; if(href) location.href = href; }); }
+  })();
+  </script></main>
+<footer data-testid="footer">
+  <div class="section">
+    <p>© 2025 Clockwork Venue</p>
+    <p>Support:
+      
+      
+    </p>
+    <p><a href="mailto:hello@clockworkvenue.com" data-testid="footer-email">hello@clockworkvenue.com</a></p>
+  </div>
+</footer>
+
+</body></html>

@@ -15,7 +15,7 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="/">
+    <a class="brand" href="/" data-testid="nav-logo">
       <!-- BEGIN brand lockup -->
       <img
         src="/assets/brand/logo-monogram-256.png"
@@ -32,7 +32,7 @@
       <!-- END brand lockup -->
     </a>
     <nav class="nav">
-      <a class="nav-link" href="https://console.clockworkvenue.com">Log in</a>
+      <a class="nav-link" href="https://console.clockworkvenue.com" data-testid="nav-login">Log in</a>
     </nav>
   </header>
 
@@ -54,8 +54,9 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" data-testid="footer">
     <p>? <span id="y"></span> Clockwork Venue. All rights reserved.</p>
+    <p><a href="mailto:hello@clockworkvenue.com" data-testid="footer-email">hello@clockworkvenue.com</a></p>
   </footer>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
