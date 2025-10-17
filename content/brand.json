@@ -1,0 +1,12 @@
+{
+  "siteTitle": "Clockwork Venue",
+  "tagline": "Run every shift like clockwork.",
+  "description": "Rotation, floor coordination, DJ flow, admin controls, and reports - finally in sync.",
+  "consoleBase": "https://console.clockworkvenue.com",
+  "paths": { "dj": "/dj", "host": "/host", "monitor": "/monitor" },
+  "signUpFormUrl": "",
+  "manualUrl": "",
+  "tutorialsUrl": "",
+  "analytics": { "ga4Id": "" },
+  "theme": "auto"
+}

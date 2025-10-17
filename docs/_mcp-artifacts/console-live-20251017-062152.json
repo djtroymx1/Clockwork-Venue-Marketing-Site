@@ -1,0 +1,15 @@
+{
+  "probe": "console",
+  "timestamp": "20251017-062152",
+  "status": 200,
+  "title": "StageFlow - Dancer Rotation Board v2.9.6 (Live bar + smaller S/M/L + floor VIP mark)",
+  "url": "https://console.clockworkvenue.com/",
+  "login_ui_detected": true,
+  "login_detection": {
+    "has_test_ids": false,
+    "has_type_selectors": false,
+    "has_text_combo": true
+  },
+  "console_message_count": 4,
+  "notes": "DOM warning: Password field is not contained in a form."
+}
