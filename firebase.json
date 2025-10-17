@@ -1,0 +1,40 @@
+{
+  "hosting": [
+    {
+      "target": "clockwork-console",
+      "public": "web-ui/dist",
+      "ignore": ["**/.*", "**/node_modules/**"],
+      "rewrites": [{ "source": "**", "destination": "/index.html" }],
+      "headers": [
+        { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-store, max-age=0" }] },
+        { "source": "/assets/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+        { "source": "/**", "headers": [{ "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }] }
+      ]
+    },
+    {
+      "target": "clockwork-www",
+      "public": "public",
+      "ignore": ["**/.*", "**/node_modules/**"],
+      "headers": [
+        { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-store, max-age=0" }] },
+        { "source": "/assets/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+        { "source": "/**", "headers": [{ "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }] }
+      ]
+    },
+    {
+      "target": "clockwork-apex",
+      "redirects": [
+        { "source": "/**", "destination": "https://www.clockworkvenue.com/:path", "type": 308 }
+      ],
+      "headers": [
+        { "source": "/**", "headers": [{ "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }] }
+      ]
+    },
+    {
+      "target": "stageflow-legacy",
+      "redirects": [
+        { "source": "/**", "destination": "https://www.clockworkvenue.com/:path", "type": 308 }
+      ]
+    }
+  ]
+}
