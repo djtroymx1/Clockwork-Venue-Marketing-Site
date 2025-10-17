@@ -37,9 +37,12 @@ jobs:
       - name: Install deps
         run: |
           pnpm install --frozen-lockfile
-          pnpm -C web-ui install --frozen-lockfile
+          if [ -f web-ui/package.json ]; then
+            pnpm -C web-ui install --frozen-lockfile
+          fi
 
       - name: Build
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui build
 
       - name: Firebase Preview Deploy

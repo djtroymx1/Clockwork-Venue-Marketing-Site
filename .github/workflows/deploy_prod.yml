@@ -57,18 +57,24 @@ jobs:
       - name: Install deps
         run: |
           pnpm install --frozen-lockfile
-          pnpm -C web-ui install --frozen-lockfile
+          if [ -f web-ui/package.json ]; then
+            pnpm -C web-ui install --frozen-lockfile
+          fi
 
       - name: Typecheck
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui typecheck
 
       - name: Lint
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui lint
 
       - name: Build
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui build
 
       - name: E2E Smoke
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui e2e:smoke
 
   deploy_hosting:

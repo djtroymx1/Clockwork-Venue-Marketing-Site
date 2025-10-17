@@ -28,30 +28,36 @@ jobs:
       - name: Install deps (root & web-ui/)
         run: |
           pnpm install --frozen-lockfile
-          pnpm -C web-ui install --frozen-lockfile
+          if [ -f web-ui/package.json ]; then
+            pnpm -C web-ui install --frozen-lockfile
+          fi
 
       - name: Cache Playwright
         id: playwright-cache
         uses: actions/cache@v4
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('web-ui/package.json') }}
 
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        if: ${{ hashFiles('web-ui/package.json') != '' && steps.playwright-cache.outputs.cache-hit != 'true' }}
         run: pnpm -C web-ui exec playwright install --with-deps
 
       - name: Typecheck
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui typecheck
 
       - name: Lint
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui lint
 
       - name: Build
+        if: ${{ hashFiles('web-ui/package.json') != '' }}
         run: pnpm -C web-ui build
 
       - name: E2E Smoke (optional)
-        if: ${{ !cancelled() }}
+        if: ${{ hashFiles('web-ui/package.json') != '' && !cancelled() }}
         run: pnpm -C web-ui e2e:smoke
 
       # Uncomment any targeted e2e suites you want always-on in CI:
