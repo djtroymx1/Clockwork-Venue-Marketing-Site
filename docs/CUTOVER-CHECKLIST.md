@@ -42,6 +42,7 @@ Plain-language guardrails to follow before promoting the Clockwork cutover to pr
 | Marketing | https://clockworkvenue--cutover-20251016202009-jlsgt7wj.web.app | 404 | 2 (favicon + page) | Static build missing; Next.js site not yet exported for Hosting preview |
 | Stageflow legacy | https://stageflow-marketing-site--cutover-20251016202009-u46ch5j2.web.app | 404 | 2 (favicon + page) | Legacy content not staged; current config points at `public/` but no HTML snapshot is present |
 | Console SPA | https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app | 200 | none | Static shell serves correctly (index + favicon) |
+| Console SPA (deep link) | https://clockwork-console--cutover-20251016202009-94xsa7tj.web.app/deep/link | 200 | none | SPA rewrite serves `/index.html` for deep routes |
 
 ## 6. Rollback Playbook
 - Hosting rollback: Firebase Console → Hosting → View releases → Roll back the affected site (`clockwork-console`, `clockwork-www`, `clockwork-apex`, or `stageflow-legacy`).
