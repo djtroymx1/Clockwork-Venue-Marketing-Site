@@ -44,5 +44,6 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.log
+.firebase/
 # Local-only legacy backup (never commit)
 _legacy/
