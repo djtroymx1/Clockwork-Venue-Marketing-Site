@@ -36,9 +36,19 @@ export function Hero() {
         </p>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <WaitlistDialog onOpen={handleWaitlistClick}>
-            <Button size="lg" className="w-full sm:w-auto">Join Waitlist</Button>
+            <Button
+              size="lg"
+              className="w-full sm:w-auto bg-[#3F8CFF] hover:bg-[#3F8CFF]/90 text-white shadow-[0_0_30px_rgba(63,140,255,0.3)]"
+            >
+              Join Waitlist
+            </Button>
           </WaitlistDialog>
-          <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
+          <Button
+            size="lg"
+            variant="outline"
+            asChild
+            className="w-full sm:w-auto border-[#1FB8C6] text-[#1FB8C6] hover:bg-[#1FB8C6]/10"
+          >
             <Link href={getLoginUrl()} target="_blank" rel="noopener noreferrer" onClick={handleLaunchAppClick}>
               Launch Web App
             </Link>

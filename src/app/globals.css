@@ -1,8 +1,8 @@
 
 
 /*
-    THEME: StageFlow Blue + Yellow (locked)
-    Primary #40A8E0 • Secondary #F8D000 • Surface #151828 • Text #E1E1E6
+    THEME: Clockwork Venue Layered Midnight Palette (locked)
+    Primary #0A2540 • Secondary #1FB8C6 • Accent #3F8CFF • Surface #08131E • Text #E1E1E6
     Do not change without approval.
 */
 @tailwind base;
@@ -22,27 +22,32 @@ html, body {
 
 @layer base {
   :root {
-    --background: 240 6% 5%; /* #0B0B0B */
+    --background: 210 58% 7%; /* #08131E */
     --background-2: 229 21% 8%; /* #0F1117 */
     --foreground: 240 8% 90%; /* #E1E1E6 */
 
-    --card: 227 27% 12%; /* #151828 */
+    --card: 210 40% 10%; /* #0F1923 */
+    --card-hover: 218 32% 15%; /* #1A2332 */
     --card-foreground: 240 8% 90%; /* #E1E1E6 */
 
     --popover: 227 27% 12%; /* #151828 */
     --popover-foreground: 240 8% 90%; /* #E1E1E6 */
 
-    --primary: 204 70% 56%; /* #40A8E0 */
-    --primary-foreground: 240 6% 5%; /* #0B0B0B */
+    --primary: 210 73% 15%; /* #0A2540 */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
 
-    --secondary: 49 97% 55%; /* #F8D000 */
-    --secondary-foreground: 240 6% 5%;
+    --secondary: 185 73% 45%; /* #1FB8C6 */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF */
 
     --muted: 240 10% 10%;
     --muted-foreground: 225 10% 68%; /* #A5A9B6 */
 
-    --accent: 50 96% 48%; /* #F8D000 */
-    --accent-foreground: 240 6% 5%;
+    --accent: 216 100% 62%; /* #3F8CFF */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --success: 153 76% 39%; /* #18B06B */
+    --warning: 38 100% 65%; /* #FFBF4D */
+    --danger: 0 73% 60%; /* #E34F4F */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -54,27 +59,32 @@ html, body {
     --radius: 18px;
   }
   .dark {
-    --background: 240 6% 5%; /* #0B0B0B */
+    --background: 210 58% 7%; /* #08131E */
     --background-2: 229 21% 8%; /* #0F1117 */
     --foreground: 240 8% 90%; /* #E1E1E6 */
 
-    --card: 227 27% 12%; /* #151828 */
+    --card: 210 40% 10%; /* #0F1923 */
+    --card-hover: 218 32% 15%; /* #1A2332 */
     --card-foreground: 240 8% 90%; /* #E1E1E6 */
 
     --popover: 227 27% 12%; /* #151828 */
     --popover-foreground: 240 8% 90%; /* #E1E1E6 */
 
-    --primary: 204 70% 56%; /* #40A8E0 */
-    --primary-foreground: 240 6% 5%; /* #0B0B0B */
+    --primary: 210 73% 15%; /* #0A2540 */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
 
-    --secondary: 49 97% 55%; /* #F8D000 */
-    --secondary-foreground: 240 6% 5%;
+    --secondary: 185 73% 45%; /* #1FB8C6 */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF */
 
     --muted: 240 10% 10%;
     --muted-foreground: 225 10% 68%; /* #A5A9B6 */
 
-    --accent: 50 96% 48%; /* #F8D000 */
-    --accent-foreground: 240 6% 5%;
+    --accent: 216 100% 62%; /* #3F8CFF */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --success: 153 76% 39%; /* #18B06B */
+    --warning: 38 100% 65%; /* #FFBF4D */
+    --danger: 0 73% 60%; /* #E34F4F */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;

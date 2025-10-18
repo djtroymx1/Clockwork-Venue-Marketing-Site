@@ -6,25 +6,45 @@ import { Badge } from "@/components/ui/badge";
 import { Users, Shuffle, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-
 const features = [
   {
-    icon: <Users className="h-8 w-8 text-primary" />,
+    icon: Users,
     title: "Live Sync Across Devices",
     description: "View and control from any device. Booth edits sync in real time to every screen. Floor staff, the house mom, and managers see the live rotation and dance counts in the club or even remotely.",
     chips: ["Real-time", "Cross-device"],
   },
   {
-    icon: <Shuffle className="h-8 w-8 text-primary" />,
+    icon: Shuffle,
     title: "Smart Stage Rotation",
     description: "Handles up to 10 stages. One tap advances dancers and starts timers, and you can move names manually at anytime.",
     chips: ["Multi-stage", "Automated"],
   },
   {
-    icon: <FileText className="h-8 w-8 text-primary" />,
+    icon: FileText,
     title: "Shift Exports and Insights",
-    description: "Save the night’s data and analyze later. Spot top earners, busiest nights, and total hours per dancer. Tip-out log for DJs.",
+    description: "Save the night's data and analyze later. Spot top earners, busiest nights, and total hours per dancer. Tip-out log for DJs.",
     chips: ["Analytics", "Data Export"],
+  },
+];
+
+const accentStyles = [
+  {
+    indicator: "bg-[#3F8CFF]",
+    iconBg: "bg-[#3F8CFF]/10",
+    iconColor: "text-[#3F8CFF]",
+    badge: "border-[#3F8CFF] text-[#3F8CFF]",
+  },
+  {
+    indicator: "bg-[#1FB8C6]",
+    iconBg: "bg-[#1FB8C6]/10",
+    iconColor: "text-[#1FB8C6]",
+    badge: "border-[#1FB8C6] text-[#1FB8C6]",
+  },
+  {
+    indicator: "bg-[#18B06B]",
+    iconBg: "bg-[#18B06B]/10",
+    iconColor: "text-[#18B06B]",
+    badge: "border-[#18B06B] text-[#18B06B]",
   },
 ];
 
@@ -41,26 +61,40 @@ export function Features() {
             </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {features.map((feature, index) => (
-            <Card 
-              key={index} 
-              className="text-center p-6 rounded-[18px] border border-border bg-card relative overflow-hidden"
-            >
-              <div className="absolute top-0 left-0 w-full h-[3px] bg-primary"></div>
-              <CardHeader className="items-center">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10">
-                    {feature.icon}
-                </div>
-                <CardTitle className="text-2xl tracking-tight">{feature.title}</CardTitle>
-                <div className="flex gap-2 mt-2">
-                    {feature.chips.map(chip => (
-                         <Badge key={chip} variant="outline" className="border-primary text-primary/90">{chip}</Badge>
+          {features.map((feature, index) => {
+            const accent = accentStyles[index % accentStyles.length];
+            const Icon = feature.icon;
+            return (
+              // rotate accent styling for visual rhythm across feature cards
+              <Card 
+                key={index} 
+                className={cn(
+                  "text-center p-6 rounded-[18px] border border-white/10 bg-[#0F1923] relative overflow-hidden transition-all duration-300",
+                  "hover:bg-[#1A2332] hover:border-[#3F8CFF]/50 hover:shadow-[0_0_30px_rgba(63,140,255,0.15)]"
+                )}
+              >
+                <div className={cn("absolute top-0 left-0 w-full h-[3px]", accent.indicator)}></div>
+                <CardHeader className="items-center">
+                  <div className={cn("mb-4 flex h-16 w-16 items-center justify-center rounded-lg", accent.iconBg)}>
+                    <Icon className={cn("h-8 w-8", accent.iconColor)} />
+                  </div>
+                  <CardTitle className="text-2xl tracking-tight">{feature.title}</CardTitle>
+                  <div className="flex gap-2 mt-2">
+                    {feature.chips.map((chip) => (
+                      <Badge
+                        key={chip}
+                        variant="outline"
+                        className={cn("border bg-transparent", accent.badge)}
+                      >
+                        {chip}
+                      </Badge>
                     ))}
-                </div>
-                <CardDescription className="pt-2 text-base text-muted-foreground">{feature.description}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
+                  </div>
+                  <CardDescription className="pt-2 text-base text-muted-foreground">{feature.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
