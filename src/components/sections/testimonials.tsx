@@ -34,9 +34,14 @@ export function Testimonials() {
           </h2>
         </div>
         <ul className="sf-testimonial-list" role="list">
-          {testimonials.map((testimonial) => (
-            <li key={testimonial.name} className="sf-testimonial-card">
-              <div className="sf-card-accent"></div>
+          {testimonials.map((testimonial, index) => {
+            const borderColor =
+              index % 2 === 0 ? "border-l-[#FFBF4D]" : "border-l-[#3F8CFF]";
+            return (
+            <li
+              key={testimonial.name}
+              className={cn("sf-testimonial-card border-l-4", borderColor)}
+            >
               <blockquote className="sf-quote">
                 “{testimonial.quote}”
               </blockquote>
@@ -48,7 +53,8 @@ export function Testimonials() {
                 </div>
               </div>
             </li>
-          ))}
+          );
+          })}
         </ul>
       </div>
     </section>
