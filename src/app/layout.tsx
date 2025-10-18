@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 const siteName = legalConfig.brandName;
-const defaultTitle = 'Clockwork Venue \u2014 Console for Night Operations';
+const defaultTitle = 'Clockwork Venue | Console for Night Operations';
 const defaultDescription =
   'Run every shift like clockwork: live rotation, VIP timers, payouts, and reports in one console.';
 const ogImagePath = '/assets/brand/clockwork-venue/og-cover.png';
